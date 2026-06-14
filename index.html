@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>中国語 音声四択トレーナー</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Susume vocabulary trainer</p>
+        <h1>音で覚える中国語四択</h1>
+        <p class="lead">中国語音声を聞いて、ピンインか漢字を選ぶ練習サイト。耳から覚えるために、問題中は意味を隠します。</p>
+      </div>
+      <div class="scorePanel" aria-label="学習スコア">
+        <div><span id="totalCount">0</span><small>問</small></div>
+        <div><span id="accuracy">0%</span><small>正答率</small></div>
+        <div><span id="streak">0</span><small>連続正解</small></div>
+      </div>
+    </section>
+
+    <section class="controls" aria-label="設定">
+      <div class="controlGroup">
+        <label for="mode">出題</label>
+        <select id="mode">
+          <option value="mixed">ミックス</option>
+          <option value="pinyin">ピンインを選ぶ</option>
+          <option value="hanzi">漢字を選ぶ</option>
+        </select>
+      </div>
+      <div class="controlGroup">
+        <label for="lesson">課</label>
+        <select id="lesson">
+          <option value="all">すべて</option>
+        </select>
+      </div>
+      <button id="mistakesOnly" class="ghost" type="button">苦手だけ</button>
+      <button id="resetStats" class="ghost" type="button">記録リセット</button>
+    </section>
+
+    <section class="quizShell">
+      <article class="quizCard">
+        <div class="topline">
+          <span id="lessonBadge" class="badge">047</span>
+          <span id="modeBadge" class="badge soft">ピンイン</span>
+        </div>
+
+        <div class="prompt">
+          <button id="playWord" class="playButton" type="button" aria-label="単語音声を再生">
+            <span>▶</span>
+          </button>
+          <div>
+            <p id="questionTitle">中国語音声を聞いて選ぼう</p>
+            <p id="questionHint">再生ボタンを押して、聞こえた単語の答えを選んでください。</p>
+          </div>
+        </div>
+
+        <div id="options" class="options" role="list"></div>
+
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+
+        <div class="actions">
+          <button id="next" type="button">次の問題</button>
+          <button id="replay" class="secondary" type="button">もう一度聞く</button>
+        </div>
+      </article>
+
+      <aside class="sidePanel">
+        <h2>原音声</h2>
+        <p id="trackLabel">この問題の課の音声</p>
+        <audio id="lessonAudio" controls preload="metadata"></audio>
+        <label class="voiceLabel" for="voiceSelect">予備の中国語読み上げ音声</label>
+        <select id="voiceSelect"></select>
+        <div class="audioTune" aria-label="音声位置補正">
+          <button id="audioPrev" class="ghost" type="button">音声を1つ前へ</button>
+          <button id="audioNext" class="ghost" type="button">音声を1つ次へ</button>
+        </div>
+        <div class="miniStats">
+          <div><strong id="wordCount">0</strong><span>単語</span></div>
+          <div><strong id="mistakeCount">0</strong><span>苦手</span></div>
+        </div>
+        <p class="note">問題の再生ボタンは教材 mp3 から切り出した中国語音声を鳴らします。下のプレイヤーでは課全体の原音声も確認できます。</p>
+      </aside>
+    </section>
+
+    <section class="wordBank">
+      <div class="sectionHeader">
+        <h2>単語一覧</h2>
+        <input id="search" type="search" placeholder="漢字・ピンイン・意味で検索">
+      </div>
+      <div id="wordList" class="wordList"></div>
+    </section>
+  </main>
+
+  <script src="./app.js?v=22"></script>
+</body>
+</html>
