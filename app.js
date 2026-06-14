@@ -176,7 +176,6 @@ const AUDIO_SPANS = {
 
 const AUDIO_RANGE_OFFSETS = [
   { lesson: "047", fromHanzi: "我", toHanzi: "去", offset: 1 },
-  { lesson: "047", fromHanzi: "中国人", toHanzi: "中国人", offset: 1 },
   { lesson: "055", fromHanzi: "这", toHanzi: "这", offset: 1 },
   { lesson: "055", fromHanzi: "照片", toHanzi: "照片", offset: 1 },
   { lesson: "055", fromHanzi: "这", toHanzi: "哪儿", offset: -1 },
@@ -230,7 +229,8 @@ const state = {
   stats: JSON.parse(localStorage.getItem("cnQuizStats") || '{"total":0,"correct":0,"streak":0,"mistakes":{}}')
 };
 
-const audioOffsets = JSON.parse(localStorage.getItem("cnQuizAudioOffsets") || "{}");
+const AUDIO_OFFSET_STORAGE_KEY = "cnQuizAudioOffsetsV2";
+const audioOffsets = JSON.parse(localStorage.getItem(AUDIO_OFFSET_STORAGE_KEY) || "{}");
 
 const els = {
   mode: document.querySelector("#mode"),
@@ -325,7 +325,7 @@ function saveStats() {
 }
 
 function saveAudioOffsets() {
-  localStorage.setItem("cnQuizAudioOffsets", JSON.stringify(audioOffsets));
+  localStorage.setItem(AUDIO_OFFSET_STORAGE_KEY, JSON.stringify(audioOffsets));
 }
 
 function sample(array) {
