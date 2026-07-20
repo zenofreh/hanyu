@@ -1,4 +1,4 @@
-const DATA = [
+const FIRST_DATA = [
   {lesson:"047", hanzi:"你好", pinyin:"nǐ hǎo", meaning:"こんにちは"},
   {lesson:"047", hanzi:"你", pinyin:"nǐ", meaning:"あなた、君"},
   {lesson:"047", hanzi:"是", pinyin:"shì", meaning:"〜だ、〜である"},
@@ -156,7 +156,184 @@ const DATA = [
   {lesson:"073", hanzi:"好", pinyin:"hǎo", meaning:"よい"}
 ];
 
+const SECOND_DATA = [
+  {lesson:"081", hanzi:"请问", pinyin:"qǐngwèn", meaning:"おたずねしますが〜"},
+  {lesson:"081", hanzi:"蜘蛛侠", pinyin:"Zhīzhūxiá", meaning:"スパイダーマン", quiz:false},
+  {lesson:"081", hanzi:"票", pinyin:"piào", meaning:"チケット"},
+  {lesson:"081", hanzi:"多少钱", pinyin:"duōshao qián", meaning:"いくら（値段）"},
+  {lesson:"081", hanzi:"张", pinyin:"zhāng", meaning:"〜枚"},
+  {lesson:"081", hanzi:"售票员", pinyin:"shòupiàoyuán", meaning:"チケット・切符の販売員"},
+  {lesson:"081", hanzi:"几", pinyin:"jǐ", meaning:"いくつ"},
+  {lesson:"081", hanzi:"座位", pinyin:"zuòwèi", meaning:"座席"},
+  {lesson:"081", hanzi:"中间", pinyin:"zhōngjiān", meaning:"真ん中"},
+  {lesson:"081", hanzi:"爆米花", pinyin:"bàomǐhuā", meaning:"ポップコーン"},
+  {lesson:"081", hanzi:"和", pinyin:"hé", meaning:"〜と"},
+  {lesson:"081", hanzi:"可乐", pinyin:"kělè", meaning:"コーラ"},
+
+  {lesson:"082", hanzi:"看", pinyin:"kàn", meaning:"見る、読む"},
+  {lesson:"082", hanzi:"电影", pinyin:"diànyǐng", meaning:"映画"},
+  {lesson:"082", hanzi:"刘", pinyin:"Liú", meaning:"劉（姓）"},
+  {lesson:"082", hanzi:"坐", pinyin:"zuò", meaning:"座る、乗る"},
+  {lesson:"082", hanzi:"公共汽车", pinyin:"gōnggòng qìchē", meaning:"バス"},
+  {lesson:"082", hanzi:"上班", pinyin:"shàngbān", meaning:"出勤する"},
+  {lesson:"082", hanzi:"个", pinyin:"ge", meaning:"〜個、〜人"},
+  {lesson:"082", hanzi:"位", pinyin:"wèi", meaning:"〜名（人を数える）"},
+  {lesson:"082", hanzi:"客人", pinyin:"kèrén", meaning:"来客"},
+  {lesson:"082", hanzi:"本", pinyin:"běn", meaning:"〜冊"},
+  {lesson:"082", hanzi:"纸", pinyin:"zhǐ", meaning:"紙"},
+  {lesson:"082", hanzi:"床", pinyin:"chuáng", meaning:"ベッド"},
+  {lesson:"082", hanzi:"条", pinyin:"tiáo", meaning:"〜本（細長いもの）"},
+  {lesson:"082", hanzi:"鱼", pinyin:"yú", meaning:"魚"},
+  {lesson:"082", hanzi:"裤子", pinyin:"kùzi", meaning:"ズボン"},
+  {lesson:"082", hanzi:"件", pinyin:"jiàn", meaning:"衣服や事柄を数える"},
+  {lesson:"082", hanzi:"衣服", pinyin:"yīfu", meaning:"服"},
+  {lesson:"082", hanzi:"事", pinyin:"shì", meaning:"事、用事"},
+  {lesson:"082", hanzi:"把", pinyin:"bǎ", meaning:"取っ手のあるものを数える"},
+  {lesson:"082", hanzi:"椅子", pinyin:"yǐzi", meaning:"椅子"},
+  {lesson:"082", hanzi:"雨伞", pinyin:"yǔsǎn", meaning:"雨傘"},
+  {lesson:"082", hanzi:"欢迎光临", pinyin:"huānyíng guānglín", meaning:"いらっしゃいませ"},
+  {lesson:"082", hanzi:"多少", pinyin:"duōshao", meaning:"いくつ、どのくらい"},
+  {lesson:"082", hanzi:"毛衣", pinyin:"máoyī", meaning:"セーター"},
+  {lesson:"082", hanzi:"小朋友", pinyin:"xiǎopéngyou", meaning:"坊や、お嬢ちゃん"},
+  {lesson:"082", hanzi:"岁", pinyin:"suì", meaning:"〜歳"},
+  {lesson:"082", hanzi:"今年", pinyin:"jīnnián", meaning:"今年"},
+  {lesson:"082", hanzi:"多大", pinyin:"duō dà", meaning:"何歳？"},
+
+  {lesson:"089", hanzi:"李一诚", pinyin:"Lǐ Yīchéng", meaning:"人名", quiz:false},
+  {lesson:"089", hanzi:"规模", pinyin:"guīmó", meaning:"規模"},
+  {lesson:"089", hanzi:"真", pinyin:"zhēn", meaning:"本当に、実に"},
+  {lesson:"089", hanzi:"有", pinyin:"yǒu", meaning:"ある、いる"},
+  {lesson:"089", hanzi:"栋", pinyin:"dòng", meaning:"〜棟"},
+  {lesson:"089", hanzi:"教学楼", pinyin:"jiàoxuélóu", meaning:"教室棟、校舎"},
+  {lesson:"089", hanzi:"第", pinyin:"dì", meaning:"第、〜番目"},
+  {lesson:"089", hanzi:"广冈莉子", pinyin:"Guǎnggāng Lìzǐ", meaning:"人名", quiz:false},
+  {lesson:"089", hanzi:"你看", pinyin:"nǐ kàn", meaning:"ほら、見て"},
+  {lesson:"089", hanzi:"旁边（儿）", pinyin:"pángbiān(r)", meaning:"横、隣"},
+  {lesson:"089", hanzi:"图书馆", pinyin:"túshūguǎn", meaning:"図書館"},
+  {lesson:"089", hanzi:"后边（儿）", pinyin:"hòubian(r)", meaning:"後ろ、後ろの方"},
+  {lesson:"089", hanzi:"车站", pinyin:"chēzhàn", meaning:"駅、バス停"},
+  {lesson:"089", hanzi:"听说", pinyin:"tīngshuō", meaning:"聞くところによると"},
+  {lesson:"089", hanzi:"日本", pinyin:"Rìběn", meaning:"日本"},
+  {lesson:"089", hanzi:"一般", pinyin:"yìbān", meaning:"普通は、一般的には"},
+  {lesson:"089", hanzi:"住", pinyin:"zhù", meaning:"住む"},
+  {lesson:"089", hanzi:"里面（儿）", pinyin:"lǐmiàn(r)", meaning:"中、内側"},
+  {lesson:"089", hanzi:"是吗", pinyin:"shì ma", meaning:"そうなんですか"},
+  {lesson:"089", hanzi:"欸", pinyin:"éi", meaning:"ねえ、あれ"},
+  {lesson:"089", hanzi:"一起", pinyin:"yìqǐ", meaning:"一緒に"},
+  {lesson:"089", hanzi:"食堂", pinyin:"shítáng", meaning:"食堂"},
+  {lesson:"089", hanzi:"吃饭", pinyin:"chīfàn", meaning:"食事をする"},
+  {lesson:"089", hanzi:"怎么样", pinyin:"zěnmeyàng", meaning:"どうですか？"},
+  {lesson:"089", hanzi:"好", pinyin:"hǎo", meaning:"はい、よし"},
+  {lesson:"089", hanzi:"在", pinyin:"zài", meaning:"ある、いる"},
+  {lesson:"089", hanzi:"这边（儿）", pinyin:"zhèbian(r) / zhèibian(r)", meaning:"こっち"},
+  {lesson:"089", hanzi:"来", pinyin:"lái", meaning:"〜しよう"},
+
+  {lesson:"090", hanzi:"姥姥", pinyin:"lǎolao", meaning:"母方の祖母"},
+  {lesson:"090", hanzi:"身体", pinyin:"shēntǐ", meaning:"身体、健康・具合"},
+  {lesson:"090", hanzi:"重庆", pinyin:"Chóngqìng", meaning:"重慶"},
+  {lesson:"090", hanzi:"夏天", pinyin:"xiàtiān", meaning:"夏"},
+  {lesson:"090", hanzi:"热", pinyin:"rè", meaning:"暑い、熱い"},
+  {lesson:"090", hanzi:"学习", pinyin:"xuéxí", meaning:"勉強"},
+  {lesson:"090", hanzi:"认真", pinyin:"rènzhēn", meaning:"真面目だ"},
+  {lesson:"090", hanzi:"上边（儿）", pinyin:"shàngbian(r)", meaning:"上、上の方"},
+  {lesson:"090", hanzi:"上面（儿）", pinyin:"shàngmiàn(r)", meaning:"上、上の方"},
+  {lesson:"090", hanzi:"下边（儿）", pinyin:"xiàbian(r)", meaning:"下、下の方"},
+  {lesson:"090", hanzi:"下面（儿）", pinyin:"xiàmiàn(r)", meaning:"下、下の方"},
+  {lesson:"090", hanzi:"前边（儿）", pinyin:"qiánbian(r)", meaning:"前、先、前方"},
+  {lesson:"090", hanzi:"前面（儿）", pinyin:"qiánmiàn(r)", meaning:"前、先、前方"},
+  {lesson:"090", hanzi:"后面（儿）", pinyin:"hòumiàn(r)", meaning:"後ろ、後方"},
+  {lesson:"090", hanzi:"左边（儿）", pinyin:"zuǒbian(r)", meaning:"左の方、左側"},
+  {lesson:"090", hanzi:"左面（儿）", pinyin:"zuǒmiàn(r)", meaning:"左の方、左側"},
+  {lesson:"090", hanzi:"右边（儿）", pinyin:"yòubian(r)", meaning:"右の方、右側"},
+  {lesson:"090", hanzi:"右面（儿）", pinyin:"yòumiàn(r)", meaning:"右の方、右側"},
+  {lesson:"090", hanzi:"里边（儿）", pinyin:"lǐbian(r)", meaning:"中、内側"},
+  {lesson:"090", hanzi:"外边（儿）", pinyin:"wàibian(r)", meaning:"外、外側"},
+  {lesson:"090", hanzi:"外面（儿）", pinyin:"wàimiàn(r)", meaning:"外、外側"},
+  {lesson:"090", hanzi:"东边（儿）", pinyin:"dōngbian(r)", meaning:"東、東の方、東側"},
+  {lesson:"090", hanzi:"东面（儿）", pinyin:"dōngmiàn(r)", meaning:"東、東の方、東側"},
+  {lesson:"090", hanzi:"南边（儿）", pinyin:"nánbian(r)", meaning:"南、南の方、南側"},
+  {lesson:"090", hanzi:"南面（儿）", pinyin:"nánmiàn(r)", meaning:"南、南の方、南側"},
+  {lesson:"090", hanzi:"西边（儿）", pinyin:"xībian(r)", meaning:"西、西の方、西側"},
+  {lesson:"090", hanzi:"西面（儿）", pinyin:"xīmiàn(r)", meaning:"西、西の方、西側"},
+  {lesson:"090", hanzi:"北边（儿）", pinyin:"běibian(r)", meaning:"北、北の方、北側"},
+  {lesson:"090", hanzi:"北面（儿）", pinyin:"běimiàn(r)", meaning:"北、北の方、北側"},
+  {lesson:"090", hanzi:"对面（儿）", pinyin:"duìmiàn(r)", meaning:"向かい側"},
+  {lesson:"090", hanzi:"桌子", pinyin:"zhuōzi", meaning:"机、テーブル"},
+  {lesson:"090", hanzi:"上", pinyin:"shang", meaning:"上、上の方"},
+  {lesson:"090", hanzi:"白板", pinyin:"báibǎn", meaning:"ホワイトボード"},
+  {lesson:"090", hanzi:"里", pinyin:"li", meaning:"中、内側"},
+  {lesson:"090", hanzi:"笔记本", pinyin:"bǐjìběn", meaning:"ノート"},
+  {lesson:"090", hanzi:"赵", pinyin:"Zhào", meaning:"趙（姓）"},
+  {lesson:"090", hanzi:"办公室", pinyin:"bàngōngshì", meaning:"事務室、オフィス"},
+  {lesson:"090", hanzi:"知道", pinyin:"zhīdào", meaning:"知る、分かる"},
+  {lesson:"090", hanzi:"对不起", pinyin:"duìbuqǐ", meaning:"ごめんなさい"},
+  {lesson:"090", hanzi:"家", pinyin:"jiā", meaning:"家"},
+  {lesson:"090", hanzi:"公园", pinyin:"gōngyuán", meaning:"公園"},
+  {lesson:"090", hanzi:"便利店", pinyin:"biànlìdiàn", meaning:"コンビニエンスストア"},
+
+  {lesson:"101", hanzi:"刘敏", pinyin:"Liú Mǐn", meaning:"人名", quiz:false},
+  {lesson:"101", hanzi:"现在", pinyin:"xiànzài", meaning:"いま、現在"},
+  {lesson:"101", hanzi:"点", pinyin:"diǎn", meaning:"〜時"},
+  {lesson:"101", hanzi:"竹内和也", pinyin:"Zhúnèi Héyě", meaning:"人名", quiz:false},
+  {lesson:"101", hanzi:"半", pinyin:"bàn", meaning:"〜半、30分"},
+  {lesson:"101", hanzi:"今天", pinyin:"jīntiān", meaning:"今日"},
+  {lesson:"101", hanzi:"晚上", pinyin:"wǎnshang", meaning:"夜"},
+  {lesson:"101", hanzi:"做", pinyin:"zuò", meaning:"する、行う"},
+  {lesson:"101", hanzi:"在", pinyin:"zài", meaning:"〜で"},
+  {lesson:"101", hanzi:"每天", pinyin:"měi tiān", meaning:"毎日"},
+  {lesson:"101", hanzi:"小时", pinyin:"xiǎoshí", meaning:"〜時間"},
+  {lesson:"101", hanzi:"大概", pinyin:"dàgài", meaning:"だいたい"},
+  {lesson:"101", hanzi:"跟", pinyin:"gēn", meaning:"〜と"},
+  {lesson:"101", hanzi:"给", pinyin:"gěi", meaning:"〜に"},
+  {lesson:"101", hanzi:"打电话", pinyin:"dǎ diànhuà", meaning:"電話をする"},
+
+  {lesson:"102", hanzi:"横滨", pinyin:"Héngbīn", meaning:"横浜"},
+  {lesson:"102", hanzi:"工作", pinyin:"gōngzuò", meaning:"働く"},
+  {lesson:"102", hanzi:"大衣", pinyin:"dàyī", meaning:"コート"},
+  {lesson:"102", hanzi:"孩子", pinyin:"háizi", meaning:"子供"},
+  {lesson:"102", hanzi:"们", pinyin:"men", meaning:"〜たち"},
+  {lesson:"102", hanzi:"奥林匹克", pinyin:"Àolínpǐkè", meaning:"オリンピック"},
+  {lesson:"102", hanzi:"前天", pinyin:"qiántiān", meaning:"おととい"},
+  {lesson:"102", hanzi:"昨天", pinyin:"zuótiān", meaning:"きのう"},
+  {lesson:"102", hanzi:"后天", pinyin:"hòutiān", meaning:"あさって"},
+  {lesson:"102", hanzi:"前年", pinyin:"qiánnián", meaning:"おととし"},
+  {lesson:"102", hanzi:"去年", pinyin:"qùnián", meaning:"去年"},
+  {lesson:"102", hanzi:"明年", pinyin:"míngnián", meaning:"来年"},
+  {lesson:"102", hanzi:"后年", pinyin:"hòunián", meaning:"再来年"},
+  {lesson:"102", hanzi:"分", pinyin:"fēn", meaning:"〜分"},
+  {lesson:"102", hanzi:"刻", pinyin:"kè", meaning:"15分"},
+  {lesson:"102", hanzi:"早上", pinyin:"zǎoshang", meaning:"朝"},
+  {lesson:"102", hanzi:"上午", pinyin:"shàngwǔ", meaning:"午前"},
+  {lesson:"102", hanzi:"中午", pinyin:"zhōngwǔ", meaning:"昼"},
+  {lesson:"102", hanzi:"下午", pinyin:"xiàwǔ", meaning:"午後"},
+  {lesson:"102", hanzi:"月", pinyin:"yuè", meaning:"〜月、〜ヶ月"},
+  {lesson:"102", hanzi:"号", pinyin:"hào", meaning:"〜日"},
+  {lesson:"102", hanzi:"生日", pinyin:"shēngrì", meaning:"誕生日"},
+  {lesson:"102", hanzi:"星期", pinyin:"xīngqī", meaning:"〜曜日、週、〜週間"},
+  {lesson:"102", hanzi:"星期天", pinyin:"xīngqītiān", meaning:"日曜日"},
+  {lesson:"102", hanzi:"上个", pinyin:"shàng ge", meaning:"先〜、前の〜"},
+  {lesson:"102", hanzi:"下个", pinyin:"xià ge", meaning:"来〜、次の〜"},
+  {lesson:"102", hanzi:"玩儿", pinyin:"wánr", meaning:"遊ぶ"},
+  {lesson:"102", hanzi:"发", pinyin:"fā", meaning:"送る"},
+  {lesson:"102", hanzi:"为什么", pinyin:"wèi shénme", meaning:"なぜ、どうして"},
+  {lesson:"102", hanzi:"礼拜", pinyin:"lǐbài", meaning:"〜曜日、週、〜週間"},
+  {lesson:"102", hanzi:"周", pinyin:"zhōu", meaning:"〜曜日、週、〜週間"},
+  {lesson:"102", hanzi:"天", pinyin:"tiān", meaning:"〜日間"},
+  {lesson:"102", hanzi:"年", pinyin:"nián", meaning:"〜年、〜年間"},
+  {lesson:"102", hanzi:"分钟", pinyin:"fēnzhōng", meaning:"〜分間"},
+  {lesson:"102", hanzi:"电视", pinyin:"diànshì", meaning:"テレビ"},
+  {lesson:"102", hanzi:"多长时间", pinyin:"duō cháng shíjiān", meaning:"どれだけの時間"}
+];
+
+const DATA = [
+  ...FIRST_DATA.map(word => ({ ...word, exam: "first" })),
+  ...SECOND_DATA.map(word => ({ ...word, exam: "second" }))
+];
+
 const AUDIO_SKIPS = [
+  { lesson: "081", beforeHanzi: "请问", count: 1 },
+  { lesson: "089", beforeHanzi: "李一诚", count: 1 },
+  { lesson: "101", beforeHanzi: "刘敏", count: 1 },
   { lesson: "047", beforeHanzi: "你好", count: 2 },
   { lesson: "064", beforeHanzi: "同学", count: 1 },
   { lesson: "072", beforeHanzi: "做", count: 1 },
@@ -171,7 +348,8 @@ const AUDIO_SPANS = {
   "056:这些:zhèxie / zhèixie": 2,
   "056:那些:nàxie / nèixie": 2,
   "056:哪些:nǎxie / něixie": 2,
-  "064:没 / 没有:méi / méiyǒu": 2
+  "064:没 / 没有:méi / méiyǒu": 2,
+  "089:这边（儿）:zhèbian(r) / zhèibian(r)": 2
 };
 
 const AUDIO_RANGE_OFFSETS = [
@@ -222,6 +400,7 @@ const AUDIO_CLIP_PARTS = {
 
 const state = {
   current: null,
+  exam: new URLSearchParams(location.search).get("test") === "2" ? "second" : "first",
   mode: "mixed",
   lesson: "all",
   answered: false,
@@ -233,6 +412,8 @@ const AUDIO_OFFSET_STORAGE_KEY = "cnQuizAudioOffsetsV2";
 const audioOffsets = JSON.parse(localStorage.getItem(AUDIO_OFFSET_STORAGE_KEY) || "{}");
 
 const els = {
+  examButtons: [...document.querySelectorAll("[data-exam]")],
+  examDescription: document.querySelector("#examDescription"),
   mode: document.querySelector("#mode"),
   lesson: document.querySelector("#lesson"),
   mistakesOnly: document.querySelector("#mistakesOnly"),
@@ -337,13 +518,14 @@ function shuffle(array) {
 }
 
 function availableWords() {
-  let words = DATA;
+  const examWords = DATA.filter(word => word.exam === state.exam && word.quiz !== false);
+  let words = examWords;
   if (state.lesson !== "all") words = words.filter(word => word.lesson === state.lesson);
   if (state.mistakesOnly) {
     const misses = state.stats.mistakes;
     words = words.filter(word => misses[keyOf(word)] > 0);
   }
-  return words.length ? words : DATA.filter(word => state.lesson === "all" || word.lesson === state.lesson);
+  return words.length ? words : examWords.filter(word => state.lesson === "all" || word.lesson === state.lesson);
 }
 
 function currentMode() {
@@ -597,7 +779,12 @@ function loadVoices() {
 
 function buildOptions(word, mode) {
   const field = mode === "pinyin" ? "pinyin" : "hanzi";
-  const pool = DATA.filter(item => keyOf(item) !== keyOf(word) && item[field] !== word[field]);
+  const pool = DATA.filter(item =>
+    item.exam === state.exam &&
+    item.quiz !== false &&
+    keyOf(item) !== keyOf(word) &&
+    item[field] !== word[field]
+  );
   return shuffle([word, ...shuffle(pool).slice(0, 3)]).map(item => ({
     label: item[field],
     sub: mode === "pinyin" ? item.hanzi : item.pinyin,
@@ -670,11 +857,15 @@ function updateStats() {
   els.accuracy.textContent = state.stats.total ? `${Math.round(state.stats.correct / state.stats.total * 100)}%` : "0%";
   els.streak.textContent = state.stats.streak;
   els.wordCount.textContent = availableWords().length;
-  els.mistakeCount.textContent = Object.values(state.stats.mistakes).filter(count => count > 0).length;
+  els.mistakeCount.textContent = DATA
+    .filter(word => word.exam === state.exam && word.quiz !== false)
+    .filter(word => state.stats.mistakes[keyOf(word)] > 0)
+    .length;
 }
 
 function renderLessons() {
-  [...new Set(DATA.map(word => word.lesson))].forEach(lesson => {
+  els.lesson.innerHTML = '<option value="all">すべて</option>';
+  [...new Set(DATA.filter(word => word.exam === state.exam).map(word => word.lesson))].forEach(lesson => {
     const option = document.createElement("option");
     option.value = lesson;
     option.textContent = `第 ${lesson}`;
@@ -685,6 +876,7 @@ function renderLessons() {
 function renderWordList() {
   const query = els.search.value.trim().toLowerCase();
   const words = DATA.filter(word => {
+    if (word.exam !== state.exam || word.quiz === false) return false;
     if (state.lesson !== "all" && word.lesson !== state.lesson) return false;
     const text = `${word.lesson} ${word.hanzi} ${word.pinyin} ${word.meaning}`.toLowerCase();
     return text.includes(query);
@@ -699,9 +891,40 @@ function renderWordList() {
   });
 }
 
+function setExam(exam) {
+  state.exam = exam;
+  state.lesson = "all";
+  state.mistakesOnly = false;
+  document.body.dataset.examTheme = exam;
+  els.mistakesOnly.classList.remove("active");
+  els.search.value = "";
+  els.examButtons.forEach(button => {
+    const selected = button.dataset.exam === exam;
+    button.classList.toggle("active", selected);
+    button.setAttribute("aria-selected", String(selected));
+    button.tabIndex = selected ? 0 : -1;
+  });
+  els.examDescription.textContent = exam === "second"
+    ? "第2回の単語だけを出題します（第1回の単語は含みません）"
+    : "第1回の単語だけを出題します";
+
+  const url = new URL(location.href);
+  if (exam === "second") url.searchParams.set("test", "2");
+  else url.searchParams.delete("test");
+  history.replaceState(null, "", url);
+
+  renderLessons();
+  renderWordList();
+  nextQuestion();
+}
+
 els.mode.addEventListener("change", () => {
   state.mode = els.mode.value;
   nextQuestion();
+});
+
+els.examButtons.forEach(button => {
+  button.addEventListener("click", () => setExam(button.dataset.exam));
 });
 
 els.lesson.addEventListener("change", () => {
@@ -743,9 +966,7 @@ if ("speechSynthesis" in window) {
   window.speechSynthesis.addEventListener("voiceschanged", loadVoices);
 }
 
-renderLessons();
-renderWordList();
-nextQuestion();
+setExam(state.exam);
 
 window.quizDebug = {
   DATA,
