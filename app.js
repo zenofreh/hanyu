@@ -668,11 +668,18 @@ function resolveInitialExam() {
   return localStorage.getItem("cnQuizLastExam") || "third";
 }
 
+function resolveInitialColorMode() {
+  const saved = localStorage.getItem("cnQuizColorMode");
+  if (saved === "dark" || saved === "light") return saved;
+  return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
 const savedStats = JSON.parse(localStorage.getItem("cnQuizStats") || '{"total":0,"correct":0,"streak":0,"mistakes":{},"stars":{}}');
 if (!savedStats.mistakes) savedStats.mistakes = {};
 if (!savedStats.stars) savedStats.stars = {};
 
 const state = {
+  view: "quiz",
   current: null,
   exam: resolveInitialExam(),
   mode: "mixed",
@@ -683,13 +690,16 @@ const state = {
   hardMode: localStorage.getItem("cnQuizHardMode") === "true",
   playbackRate: 1,
   userInteracted: false,
+  maskHanzi: false,
   maskPinyin: false,
   maskMeaning: false,
   bankStarOnly: false,
+  seqPlaying: false,
+  seqToken: 0,
   deck: [],
   deckIndex: 0,
   round: 1,
-  colorMode: localStorage.getItem("cnQuizColorMode") || "light",
+  colorMode: resolveInitialColorMode(),
   stats: savedStats
 };
 
@@ -697,25 +707,47 @@ const AUDIO_OFFSET_STORAGE_KEY = "cnQuizAudioOffsetsV2";
 const audioOffsets = JSON.parse(localStorage.getItem(AUDIO_OFFSET_STORAGE_KEY) || "{}");
 
 const els = {
+  // Topbar & Navigation
+  tabQuiz: document.querySelector("#tabQuiz"),
+  tabBank: document.querySelector("#tabBank"),
+  panelQuiz: document.querySelector("#panelQuiz"),
+  panelBank: document.querySelector("#panelBank"),
+  navWordCount: document.querySelector("#navWordCount"),
+  shortcutHelpBtn: document.querySelector("#shortcutHelpBtn"),
+  shortcutPopover: document.querySelector("#shortcutPopover"),
+  closeShortcuts: document.querySelector("#closeShortcuts"),
   themeToggle: document.querySelector("#themeToggle"),
-  themeIcon: document.querySelector("#themeIcon"),
+
+  // Scope & Filters
   examButtons: [...document.querySelectorAll("[data-exam]")],
   countFirst: document.querySelector("#countFirst"),
   countSecond: document.querySelector("#countSecond"),
   countThird: document.querySelector("#countThird"),
   countAll: document.querySelector("#countAll"),
   examDescription: document.querySelector("#examDescription"),
+  modeFieldWrap: document.querySelector("#modeFieldWrap"),
   mode: document.querySelector("#mode"),
   lesson: document.querySelector("#lesson"),
+
+  // Quiz Study Bar & Empty State
   autoPlayToggle: document.querySelector("#autoPlayToggle"),
   hardModeToggle: document.querySelector("#hardModeToggle"),
   mistakesOnly: document.querySelector("#mistakesOnly"),
   mistakeBadge: document.querySelector("#mistakeBadge"),
-  resetStats: document.querySelector("#resetStats"),
+  shuffleDeck: document.querySelector("#shuffleDeck"),
+  quizEmptyState: document.querySelector("#quizEmptyState"),
+  exitMistakesBtn: document.querySelector("#exitMistakesBtn"),
+
+  // Telemetry
   totalCount: document.querySelector("#totalCount"),
   accuracy: document.querySelector("#accuracy"),
   streak: document.querySelector("#streak"),
   streakCard: document.querySelector("#streakCard"),
+  wordCount: document.querySelector("#wordCount"),
+  mistakeCount: document.querySelector("#mistakeCount"),
+
+  // Quiz Card & Studio Drawer
+  quizCard: document.querySelector("#quizCard"),
   deckLabel: document.querySelector("#deckLabel"),
   deckCounter: document.querySelector("#deckCounter"),
   progressFill: document.querySelector("#progressFill"),
@@ -723,34 +755,58 @@ const els = {
   modeBadge: document.querySelector("#modeBadge"),
   speedNormal: document.querySelector("#speedNormal"),
   speedSlow: document.querySelector("#speedSlow"),
-  questionTitle: document.querySelector("#questionTitle"),
-  questionHint: document.querySelector("#questionHint"),
-  options: document.querySelector("#options"),
-  feedback: document.querySelector("#feedback"),
-  playWord: document.querySelector("#playWord"),
-  replay: document.querySelector("#replay"),
-  next: document.querySelector("#next"),
-  shuffleDeck: document.querySelector("#shuffleDeck"),
+  toggleStudioBtn: document.querySelector("#toggleStudioBtn"),
+  studioDrawer: document.querySelector("#studioDrawer"),
   lessonAudio: document.querySelector("#lessonAudio"),
   clipTimeBadge: document.querySelector("#clipTimeBadge"),
-  voiceSelect: document.querySelector("#voiceSelect"),
+  trackLabel: document.querySelector("#trackLabel"),
   audioPrev: document.querySelector("#audioPrev"),
   audioNext: document.querySelector("#audioNext"),
   audioResetOne: document.querySelector("#audioResetOne"),
-  trackLabel: document.querySelector("#trackLabel"),
-  wordCount: document.querySelector("#wordCount"),
-  mistakeCount: document.querySelector("#mistakeCount"),
-  bankCountLabel: document.querySelector("#bankCountLabel"),
+  voiceSelect: document.querySelector("#voiceSelect"),
+  resetStats: document.querySelector("#resetStats"),
+  resetConfirmBar: document.querySelector("#resetConfirmBar"),
+  confirmResetYes: document.querySelector("#confirmResetYes"),
+  confirmResetNo: document.querySelector("#confirmResetNo"),
+
+  // Prompt, Options & Dock
+  playWord: document.querySelector("#playWord"),
+  replay: document.querySelector("#replay"),
+  questionTitle: document.querySelector("#questionTitle"),
+  questionHint: document.querySelector("#questionHint"),
+  options: document.querySelector("#options"),
+  dockIdle: document.querySelector("#dockIdle"),
+  skipQuestion: document.querySelector("#skipQuestion"),
+  feedback: document.querySelector("#feedback"),
+  next: document.querySelector("#next"),
+
+  // Wordbook
+  search: document.querySelector("#search"),
+  clearSearch: document.querySelector("#clearSearch"),
+  maskHanzi: document.querySelector("#maskHanzi"),
   maskPinyin: document.querySelector("#maskPinyin"),
   maskMeaning: document.querySelector("#maskMeaning"),
   bankStarFilter: document.querySelector("#bankStarFilter"),
-  search: document.querySelector("#search"),
+  seqPlayBtn: document.querySelector("#seqPlayBtn"),
+  seqPlayLabel: document.querySelector("#seqPlayLabel"),
+  bankCountLabel: document.querySelector("#bankCountLabel"),
   wordList: document.querySelector("#wordList")
+};
+
+const SVG = {
+  check: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
+  cross: `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`,
+  speaker: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>`,
+  starOutline: `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`,
+  starFilled: `<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`,
+  playSmall: `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v14l11-7-11-7z"></path></svg>`,
+  stopSmall: `<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"></rect></svg>`
 };
 
 let voices = [];
 let audioContext;
 let playingSource = null;
+let playingResolve = null;
 let playingWordEl = null;
 const segmentCache = new Map();
 
@@ -773,11 +829,13 @@ function toggleStar(word) {
   }
   saveStats();
   updateStats();
-  renderWordList();
+  if (state.view === "bank") {
+    renderWordList();
+  }
 }
 
 function formatLessonLabel(lesson) {
-  return LESSON_LABELS[lesson] || `第 ${lesson} 音声`;
+  return LESSON_LABELS[lesson] || `音声 ${lesson}`;
 }
 
 function skipBefore(word) {
@@ -874,8 +932,7 @@ function scopeWords() {
 function availableWords() {
   const base = scopeWords();
   if (state.mistakesOnly) {
-    const flagged = base.filter(isFlagged);
-    if (flagged.length) return flagged;
+    return base.filter(isFlagged);
   }
   return base;
 }
@@ -890,7 +947,6 @@ function drawNextWord() {
   const pool = availableWords();
   if (!pool.length) return null;
 
-  // Rebuild if deck is empty or out of sync with current filter
   const poolIds = new Set(pool.map(w => w.id));
   const validRemaining = state.deck.slice(state.deckIndex).filter(w => poolIds.has(w.id));
 
@@ -900,7 +956,6 @@ function drawNextWord() {
     state.deckIndex = 0;
   }
 
-  // Ensure we don't repeat the exact same word across round boundary if pool > 1
   if (state.deckIndex === 0 && state.current && pool.length > 1 && state.deck[0].id === state.current.word.id) {
     [state.deck[0], state.deck[1]] = [state.deck[1], state.deck[0]];
   }
@@ -914,15 +969,32 @@ function currentMode() {
   return state.mode === "mixed" ? sample(["pinyin", "hanzi"]) : state.mode;
 }
 
-function setPlayingIndicator(active, wordCardEl = null) {
-  els.playWord.classList.toggle("playing", active);
+function stopCurrentAudio() {
+  window.speechSynthesis?.cancel();
+  if (playingSource) {
+    try { playingSource.stop(); } catch {}
+    playingSource = null;
+  }
+  if (playingResolve) {
+    const r = playingResolve;
+    playingResolve = null;
+    r();
+  }
+  setPlayingIndicator("idle");
+}
+
+function setPlayingIndicator(status, wordCardEl = null) {
+  els.playWord.classList.toggle("loading", status === "loading");
+  els.playWord.classList.toggle("playing", status === "playing" && !wordCardEl);
+
   if (playingWordEl && playingWordEl !== wordCardEl) {
     playingWordEl.classList.remove("playingWord");
   }
   if (wordCardEl) {
+    const active = status === "playing" || status === "loading";
     wordCardEl.classList.toggle("playingWord", active);
     playingWordEl = active ? wordCardEl : null;
-  } else if (!active && playingWordEl) {
+  } else if (status === "idle" && playingWordEl) {
     playingWordEl.classList.remove("playingWord");
     playingWordEl = null;
   }
@@ -931,39 +1003,54 @@ function setPlayingIndicator(active, wordCardEl = null) {
 async function speak(word, wordCardEl = null) {
   if (!word) return;
   state.userInteracted = true;
-  window.speechSynthesis?.cancel();
+  stopCurrentAudio();
 
   const playedClip = await playOriginalClip(word, wordCardEl);
   if (playedClip) return;
 
   if (!("speechSynthesis" in window)) {
-    showAudioNotice("このブラウザでは単語音声を再生できません。右側の原音声プレイヤーを使ってください。");
+    showAudioNotice("このブラウザでは音声を再生できません。「原音声・補正」から教材トラックを再生してください。");
     return;
   }
   const selectedVoice = voices.find(voice => voice.name === els.voiceSelect.value) || getBestChineseVoice();
   if (!selectedVoice) {
-    showAudioNotice("中国語音声が見つかりません。右側の原音声プレイヤーを再生して確認してください。");
+    showAudioNotice("音声の読み込みに失敗しました。「原音声・補正」を開いて確認してください。");
     return;
   }
 
-  const text = word.hanzi
-    .replace(/（儿）/g, "")
-    .replace(/〜/g, "")
-    .replace(/\s*\/\s*/g, "、")
-    .replace(/app/g, "APP");
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.voice = selectedVoice;
-  utterance.lang = "zh-CN";
-  utterance.rate = state.playbackRate < 1 ? 0.65 : 0.82;
-  utterance.pitch = 1;
-  setPlayingIndicator(true, wordCardEl);
-  utterance.onend = () => setPlayingIndicator(false, wordCardEl);
-  utterance.onerror = () => setPlayingIndicator(false, wordCardEl);
-  window.speechSynthesis.speak(utterance);
+  await new Promise(resolve => {
+    const text = word.hanzi
+      .replace(/（儿）/g, "")
+      .replace(/〜/g, "")
+      .replace(/\s*\/\s*/g, "、")
+      .replace(/app/g, "APP");
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.voice = selectedVoice;
+    utterance.lang = "zh-CN";
+    utterance.rate = state.playbackRate < 1 ? 0.65 : 0.82;
+    utterance.pitch = 1;
+    playingResolve = resolve;
+    setPlayingIndicator("playing", wordCardEl);
+    const finish = () => {
+      if (playingResolve === resolve) playingResolve = null;
+      setPlayingIndicator("idle", wordCardEl);
+      resolve();
+    };
+    utterance.onend = finish;
+    utterance.onerror = finish;
+    window.speechSynthesis.speak(utterance);
+  });
 }
 
 function showAudioNotice(message) {
-  els.feedback.innerHTML = `<div class="revealCard bad"><div class="revealBody"><span class="revealMeaning">${escapeHtml(message)}</span></div></div>`;
+  els.dockIdle.hidden = true;
+  els.feedback.hidden = false;
+  els.feedback.innerHTML = `
+    <div class="revealLeft">
+      <span class="verdictPill bad">${SVG.cross}<span>音声エラー</span></span>
+      <span class="revealMeaning">${escapeHtml(message)}</span>
+    </div>
+  `;
 }
 
 async function updateClipBadgeFor(word) {
@@ -973,10 +1060,10 @@ async function updateClipBadgeFor(word) {
     if (segment) {
       els.clipTimeBadge.textContent = `${segment.start.toFixed(1)}s – ${segment.end.toFixed(1)}s`;
     } else {
-      els.clipTimeBadge.textContent = "--:--";
+      els.clipTimeBadge.textContent = "--.-s";
     }
   } catch {
-    els.clipTimeBadge.textContent = "--:--";
+    els.clipTimeBadge.textContent = "--.-s";
   }
 }
 
@@ -984,15 +1071,17 @@ async function playOriginalClip(word, wordCardEl = null) {
   try {
     if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
     if (audioContext.state === "suspended") await audioContext.resume();
-    if (playingSource) {
-      try { playingSource.stop(); } catch {}
-      playingSource = null;
-      setPlayingIndicator(false);
+
+    if (!segmentCache.has(word.lesson)) {
+      setPlayingIndicator("loading", wordCardEl);
     }
 
     const entry = await getLessonSegments(word.lesson);
     const segment = playbackSegmentFor(entry, word);
-    if (!segment) return false;
+    if (!segment) {
+      setPlayingIndicator("idle", wordCardEl);
+      return false;
+    }
 
     els.clipTimeBadge.textContent = `${segment.start.toFixed(1)}s – ${segment.end.toFixed(1)}s`;
 
@@ -1006,26 +1095,31 @@ async function playOriginalClip(word, wordCardEl = null) {
     gainNode.gain.setValueAtTime(1.0, now + Math.max(fade, realPlayDuration - fade));
     gainNode.gain.linearRampToValueAtTime(0.0001, now + realPlayDuration);
 
-    const source = audioContext.createBufferSource();
-    source.buffer = entry.buffer;
-    source.playbackRate.value = state.playbackRate;
-    source.connect(gainNode);
-    gainNode.connect(audioContext.destination);
+    await new Promise(resolve => {
+      const source = audioContext.createBufferSource();
+      source.buffer = entry.buffer;
+      source.playbackRate.value = state.playbackRate;
+      source.connect(gainNode);
+      gainNode.connect(audioContext.destination);
 
-    playingSource = source;
-    setPlayingIndicator(true, wordCardEl);
+      playingSource = source;
+      playingResolve = resolve;
+      setPlayingIndicator("playing", wordCardEl);
 
-    source.onended = () => {
-      if (playingSource === source) {
-        playingSource = null;
-        setPlayingIndicator(false, wordCardEl);
-      }
-    };
-    source.start(0, segment.start, clipDur);
+      source.onended = () => {
+        if (playingSource === source) {
+          playingSource = null;
+          if (playingResolve === resolve) playingResolve = null;
+          setPlayingIndicator("idle", wordCardEl);
+        }
+        resolve();
+      };
+      source.start(0, segment.start, clipDur);
+    });
     return true;
   } catch (error) {
     console.warn("Original clip playback failed", error);
-    setPlayingIndicator(false, wordCardEl);
+    setPlayingIndicator("idle", wordCardEl);
     return false;
   }
 }
@@ -1103,7 +1197,11 @@ async function getLessonSegments(lesson) {
       if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
       return audioContext.decodeAudioData(arrayBuffer);
     })
-    .then(buffer => ({ buffer, segments: detectSegments(buffer, audioItemCount(lesson)) }));
+    .then(buffer => ({ buffer, segments: detectSegments(buffer, audioItemCount(lesson)) }))
+    .catch(err => {
+      segmentCache.delete(lesson);
+      throw err;
+    });
   segmentCache.set(lesson, promise);
   return promise;
 }
@@ -1144,7 +1242,6 @@ function detectSegments(buffer, expectedCount) {
 
   const sliced = merged.slice(0, expectedCount);
 
-  // Preserve soft initial consonants (ch-, sh-, c-, s-, x-, q-, t-, p-, k-, f-, h-) by gently expanding into surrounding silence
   return sliced.map((seg, i) => {
     const prevEnd = i > 0 ? sliced[i - 1].end : 0;
     const nextStart = i < sliced.length - 1 ? sliced[i + 1].start : buffer.duration;
@@ -1209,7 +1306,7 @@ function loadVoices() {
   if (!chineseVoices.length) {
     const option = document.createElement("option");
     option.value = "";
-    option.textContent = "中国語音声が見つかりません";
+    option.textContent = "ブラウザ音声なし";
     els.voiceSelect.append(option);
     return;
   }
@@ -1243,7 +1340,6 @@ function hasAudioAmbiguity(a, b) {
   const pa = primaryPinyin(a.pinyin);
   const pb = primaryPinyin(b.pinyin);
   if (pa === pb) return true;
-  // Also avoid neutral-tone vs full-tone duplicates of identical character root like guò vs guo
   if (stripToneMarks(pa) === stripToneMarks(pb) && a.hanzi.replace(/（儿）/g, "") === b.hanzi.replace(/（儿）/g, "")) {
     return true;
   }
@@ -1258,7 +1354,6 @@ function buildOptions(word, mode) {
     !hasAudioAmbiguity(item, word)
   );
 
-  // Prefer distractors from same exam, deduplicated against each other too
   const chosen = [];
   for (const candidate of shuffle(examPool)) {
     if (chosen.length >= 3) break;
@@ -1298,7 +1393,12 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
-function renderOptionContent(option, revealed) {
+function renderOptionInner(option, idx, stateKind = "idle") {
+  let keyBadgeContent = String(idx + 1);
+  if (stateKind === "correct") keyBadgeContent = SVG.check;
+  else if (stateKind === "wrong") keyBadgeContent = SVG.cross;
+
+  const revealed = stateKind !== "idle";
   const mainLang = option.isChineseLabel ? ' lang="zh-CN"' : "";
   const mainClass = option.isMeaningMode ? "optMain meaningLabel" : "optMain";
 
@@ -1314,30 +1414,40 @@ function renderOptionContent(option, revealed) {
   }
 
   return `
+    <span class="optKey" aria-hidden="true">${keyBadgeContent}</span>
     <div class="optContent">
       <span class="${mainClass}"${mainLang}>${escapeHtml(option.label)}</span>
       ${subHtml}
     </div>
-    <span class="optAudioHint" aria-hidden="true">${revealed ? "🔊" : ""}</span>
+    <span class="optSpeakBadge" aria-hidden="true">${SVG.speaker}</span>
   `;
 }
 
 function updateDeckProgressUI() {
   const totalInDeck = Math.max(1, state.deck.length);
   const currentPos = Math.min(totalInDeck, state.deckIndex);
-  els.deckLabel.textContent = state.mistakesOnly
-    ? `⭐ 要復習ラウンド ${state.round}周目`
-    : `ラウンド ${state.round}周目`;
-  els.deckCounter.textContent = `${currentPos} / ${totalInDeck} 語`;
-  els.progressFill.style.width = `${Math.round((currentPos / totalInDeck) * 100)}%`;
+  els.deckLabel.textContent = state.mistakesOnly ? `要復習 ${state.round}周目` : `${state.round}周目`;
+  els.deckCounter.textContent = `${currentPos} / ${totalInDeck}`;
+  els.progressFill.style.width = `${Math.max(2, Math.round((currentPos / totalInDeck) * 100))}%`;
 }
 
 function nextQuestion({ autoSpeak = false } = {}) {
   const word = drawNextWord();
-  if (!word) return;
+
+  if (!word) {
+    state.current = null;
+    els.quizCard.hidden = true;
+    els.quizEmptyState.hidden = false;
+    updateStats();
+    return;
+  }
+
+  els.quizEmptyState.hidden = true;
+  els.quizCard.hidden = false;
+
   const mode = currentMode();
   const options = buildOptions(word, mode);
-  state.current = { word, mode, options };
+  state.current = { word, mode, options, lastResultCorrect: false };
   state.answered = false;
 
   els.lessonBadge.textContent = formatLessonLabel(word.lesson);
@@ -1347,33 +1457,38 @@ function nextQuestion({ autoSpeak = false } = {}) {
     meaning: "意味を選ぶ"
   };
   els.modeBadge.textContent = modeTitleMap[mode];
-  els.questionTitle.textContent = "中国語音声を聞いて正解を選ぼう";
+  els.questionTitle.textContent = "音声を聞いて正しい答えを選択";
   els.questionHint.textContent = state.hardMode
-    ? "本番モード中：補助ヒントなしで聞き取りに挑戦！"
-    : "耳だけで聞き取って選択。回答後は各選択肢をタップして音を聞き比べられます。";
+    ? "本番モード：補助ラベルを非表示にしています。耳だけで判断しましょう。"
+    : "回答すると意味が表示され、他の選択肢もタップして発音を聞き比べられます。";
+
+  els.dockIdle.hidden = false;
+  els.feedback.hidden = true;
   els.feedback.innerHTML = "";
+
   els.lessonAudio.src = `./audio/${word.lesson}.mp3`;
   els.trackLabel.textContent = `${formatLessonLabel(word.lesson)} のフル原音声`;
 
   updateDeckProgressUI();
   updateClipBadgeFor(word);
 
-  els.options.innerHTML = "";
+  const frag = document.createDocumentFragment();
   options.forEach((option, idx) => {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "option";
     button.dataset.correct = String(option.correct);
-    button.innerHTML = `<span class="optKey">${idx + 1}</span>${renderOptionContent(option, false)}`;
+    button.innerHTML = renderOptionInner(option, idx, "idle");
     button.addEventListener("click", () => {
       if (!state.answered) {
         answer(idx);
       } else {
-        speak(option.word);
+        speak(option.word, button);
       }
     });
-    els.options.append(button);
+    frag.append(button);
   });
+  els.options.replaceChildren(frag);
 
   updateStats();
 
@@ -1382,31 +1497,48 @@ function nextQuestion({ autoSpeak = false } = {}) {
   }
 }
 
-function renderFeedbackCard(word, isCorrect) {
+function renderDockReveal(word, isCorrect) {
   const starred = isFlagged(word);
-  const verdict = isCorrect
-    ? (state.stats.streak >= 3 ? `正解！ 🔥 ${state.stats.streak}連続` : "正解！")
-    : "惜しい！ 正解はこちら";
+  const verdictLabel = isCorrect
+    ? (state.stats.streak >= 3 ? `正解 · ${state.stats.streak}連続` : "正解")
+    : "不正解";
 
+  els.dockIdle.hidden = true;
+  els.feedback.hidden = false;
   els.feedback.innerHTML = `
-    <div class="revealCard ${isCorrect ? "good" : "bad"}">
-      <div class="revealBody">
-        <span class="revealVerdict">${escapeHtml(verdict)}</span>
-        <div class="revealWord">
+    <div class="revealLeft">
+      <span class="verdictPill ${isCorrect ? "good" : "bad"}">
+        ${isCorrect ? SVG.check : SVG.cross}
+        <span>${escapeHtml(verdictLabel)}</span>
+      </span>
+      <div class="revealSummary">
+        <div class="revealMainLine">
           <span class="revealHanzi" lang="zh-CN">${escapeHtml(word.hanzi)}</span>
           <span class="revealPinyin">${escapeHtml(word.pinyin)}</span>
         </div>
         <span class="revealMeaning">${escapeHtml(word.meaning)}</span>
       </div>
-      <button id="revealStarBtn" class="starBtn ${starred ? "starred" : ""}" type="button">
-        <span>${starred ? "★ 要復習に登録中" : "☆ 要復習に追加"}</span>
+    </div>
+    <div class="revealActions">
+      <button id="revealStarBtn" class="starToggleBtn ${starred ? "starred" : ""}" type="button" aria-label="${starred ? "要復習に登録中" : "要復習に追加"}" aria-pressed="${starred}" title="要復習リストに追加・解除 (S)">
+        ${starred ? SVG.starFilled : SVG.starOutline}
+        <span class="hideMobile">${starred ? "要復習に登録中" : "要復習に追加"}</span>
+      </button>
+      <button id="dockNextBtn" class="primaryBtn" type="button">
+        <span>次の問題へ</span>
+        <kbd class="hideMobile">Enter</kbd>
       </button>
     </div>
   `;
 
   document.querySelector("#revealStarBtn")?.addEventListener("click", () => {
     toggleStar(word);
-    renderFeedbackCard(word, isCorrect);
+    renderDockReveal(word, isCorrect);
+  });
+
+  document.querySelector("#dockNextBtn")?.addEventListener("click", () => {
+    state.userInteracted = true;
+    nextQuestion({ autoSpeak: true });
   });
 }
 
@@ -1419,6 +1551,7 @@ function answer(selectedIndex) {
   const chosenOption = options[selectedIndex];
   if (!chosenOption) return;
   const isCorrect = chosenOption.correct;
+  state.current.lastResultCorrect = isCorrect;
   const id = keyOf(word);
 
   state.stats.total += 1;
@@ -1437,31 +1570,39 @@ function answer(selectedIndex) {
   [...els.options.children].forEach((optionButton, idx) => {
     const opt = options[idx];
     optionButton.classList.add("locked");
-    if (idx === selectedIndex && !isCorrect) optionButton.classList.add("wrong");
-    if (opt.correct) optionButton.classList.add("correct");
-    optionButton.innerHTML = `<span class="optKey">${idx + 1}</span>${renderOptionContent(opt, true)}`;
+    let stateKind = "revealed";
+    if (opt.correct) {
+      optionButton.classList.add("correct");
+      stateKind = "correct";
+    } else if (idx === selectedIndex && !isCorrect) {
+      optionButton.classList.add("wrong");
+      stateKind = "wrong";
+    }
+    optionButton.innerHTML = renderOptionInner(opt, idx, stateKind);
+    optionButton.setAttribute("aria-label", `${opt.word.hanzi} ${opt.word.pinyin} の発音を聞く`);
   });
 
-  renderFeedbackCard(word, isCorrect);
+  renderDockReveal(word, isCorrect);
   saveStats();
   updateStats();
-  renderWordList();
+  if (state.view === "bank") renderWordList();
 }
 
 function updateStats() {
   els.totalCount.textContent = state.stats.total;
   els.accuracy.textContent = state.stats.total
     ? `${Math.round((state.stats.correct / state.stats.total) * 100)}%`
-    : "0%";
+    : "—";
   els.streak.textContent = state.stats.streak;
   els.streakCard.classList.toggle("hot", state.stats.streak >= 5);
 
-  const examScope = DATA.filter(word => matchesExam(word) && word.quiz !== false);
-  const flaggedCount = examScope.filter(isFlagged).length;
+  const currentScope = scopeWords();
+  const flaggedInScope = currentScope.filter(isFlagged).length;
 
-  els.wordCount.textContent = availableWords().length;
-  els.mistakeCount.textContent = flaggedCount;
-  els.mistakeBadge.textContent = flaggedCount;
+  els.wordCount.textContent = currentScope.length;
+  els.navWordCount.textContent = currentScope.length;
+  els.mistakeCount.textContent = flaggedInScope;
+  els.mistakeBadge.textContent = flaggedInScope;
 
   els.countFirst.textContent = DATA.filter(w => w.exam === "first" && w.quiz !== false).length;
   els.countSecond.textContent = DATA.filter(w => w.exam === "second" && w.quiz !== false).length;
@@ -1470,13 +1611,18 @@ function updateStats() {
 }
 
 function renderLessons() {
-  els.lesson.innerHTML = '<option value="all">すべての範囲</option>';
+  els.lesson.innerHTML = "";
   const examWords = DATA.filter(word => matchesExam(word) && word.quiz !== false);
+
+  const allOpt = document.createElement("option");
+  allOpt.value = "all";
+  allOpt.textContent = `すべての課 (${examWords.length}語)`;
+  els.lesson.append(allOpt);
 
   const chapters = [...new Set(examWords.map(w => w.chapter).filter(Boolean))];
   if (chapters.length) {
     const chGroup = document.createElement("optgroup");
-    chGroup.label = "課ごとにまとめて練習";
+    chGroup.label = "課ごとにまとめて選択";
     chapters.forEach(ch => {
       const tracks = [...new Set(examWords.filter(w => w.chapter === ch).map(w => w.lesson))];
       const count = examWords.filter(w => w.chapter === ch).length;
@@ -1500,9 +1646,9 @@ function renderLessons() {
   els.lesson.append(trackGroup);
 }
 
-function renderWordList() {
+function filteredBankWords() {
   const query = els.search.value.trim().toLowerCase();
-  const words = DATA.filter(word => {
+  return DATA.filter(word => {
     if (!matchesExam(word) || word.quiz === false) return false;
     if (!matchesLessonFilter(word)) return false;
     if (state.bankStarOnly && !isFlagged(word)) return false;
@@ -1510,58 +1656,188 @@ function renderWordList() {
     const text = `${word.lesson} ${word.chapter || ""} ${word.hanzi} ${word.pinyin} ${stripToneMarks(word.pinyin)} ${word.meaning}`.toLowerCase();
     return text.includes(query);
   });
+}
 
+function renderWordList() {
+  const words = filteredBankWords();
+  els.clearSearch.hidden = !els.search.value;
   els.bankCountLabel.textContent = `${words.length} 語`;
+
+  els.wordList.classList.toggle("mask-hanzi", state.maskHanzi);
   els.wordList.classList.toggle("mask-pinyin", state.maskPinyin);
   els.wordList.classList.toggle("mask-meaning", state.maskMeaning);
-  els.wordList.innerHTML = "";
 
   if (!words.length) {
-    els.wordList.innerHTML = `<div class="emptyState">該当する単語がありません。検索条件やフィルターを変更してください。</div>`;
+    els.wordList.innerHTML = `
+      <div class="emptyPanel">
+        <h2>一致する単語がありません</h2>
+        <p>検索キーワードや「★ 要復習のみ」フィルターを解除してみてください。</p>
+      </div>
+    `;
     return;
   }
 
-  words.forEach(word => {
-    const starred = isFlagged(word);
-    const item = document.createElement("div");
-    item.className = "word";
-    item.innerHTML = `
-      <div class="wordTop">
-        <span class="wordLesson">${escapeHtml(formatLessonLabel(word.lesson))}</span>
-        <div class="wordActions">
-          <button class="wordStar ${starred ? "starred" : ""}" type="button" aria-label="要復習スター切替" title="要復習リストに追加・解除">
-            ${starred ? "★" : "☆"}
+  // Group cleanly by lesson track
+  const grouped = new Map();
+  for (const w of words) {
+    if (!grouped.has(w.lesson)) grouped.set(w.lesson, []);
+    grouped.get(w.lesson).push(w);
+  }
+
+  const rootFrag = document.createDocumentFragment();
+  for (const [lesson, lessonWords] of grouped.entries()) {
+    const section = document.createElement("section");
+    section.className = "lessonSection";
+
+    const header = document.createElement("div");
+    header.className = "lessonSectionHeader";
+    header.innerHTML = `
+      <h3 class="lessonSectionTitle">
+        <span>${escapeHtml(formatLessonLabel(lesson))}</span>
+        <span class="lessonCountTag">${lessonWords.length}語</span>
+      </h3>
+      <button class="drillLessonBtn" type="button" data-drill-lesson="${escapeHtml(lesson)}">
+        <span>このトラックをクイズ演習</span>
+        <span aria-hidden="true">→</span>
+      </button>
+    `;
+    header.querySelector(".drillLessonBtn").addEventListener("click", () => {
+      state.userInteracted = true;
+      stopSequentialPlay();
+      state.lesson = lesson;
+      els.lesson.value = lesson;
+      state.mistakesOnly = false;
+      els.mistakesOnly.classList.remove("active");
+      els.mistakesOnly.setAttribute("aria-pressed", "false");
+      rebuildDeck();
+      setView("quiz");
+      nextQuestion({ autoSpeak: true });
+    });
+
+    const grid = document.createElement("div");
+    grid.className = "wordGrid";
+
+    lessonWords.forEach(word => {
+      const starred = isFlagged(word);
+      const card = document.createElement("div");
+      card.className = "word";
+      card.dataset.wordId = word.id;
+      card.tabIndex = 0;
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", `${word.hanzi} ${word.pinyin} ${word.meaning} を再生`);
+      card.innerHTML = `
+        <div class="wordTop">
+          <span class="wordPlayHint">${SVG.speaker}<span>再生</span></span>
+          <button class="wordStar ${starred ? "starred" : ""}" type="button" aria-pressed="${starred}" aria-label="要復習スター切替" title="要復習に追加・解除">
+            ${starred ? SVG.starFilled : SVG.starOutline}
           </button>
         </div>
-      </div>
-      <b lang="zh-CN">${escapeHtml(word.hanzi)}</b>
-      <span class="wPinyin">${escapeHtml(word.pinyin)}</span>
-      <small class="wMeaning">${escapeHtml(word.meaning)}</small>
-    `;
+        <b class="wHanzi" lang="zh-CN">${escapeHtml(word.hanzi)}</b>
+        <span class="wPinyin">${escapeHtml(word.pinyin)}</span>
+        <span class="wMeaning">${escapeHtml(word.meaning)}</span>
+      `;
 
-    const starBtn = item.querySelector(".wordStar");
-    starBtn.addEventListener("click", e => {
-      e.stopPropagation();
-      toggleStar(word);
+      const starBtn = card.querySelector(".wordStar");
+      starBtn.addEventListener("click", e => {
+        e.stopPropagation();
+        toggleStar(word);
+      });
+
+      const activateCard = () => {
+        stopSequentialPlay();
+        if (state.maskHanzi || state.maskPinyin || state.maskMeaning) {
+          card.classList.toggle("peek");
+        }
+        speak(word, card);
+      };
+
+      card.addEventListener("click", activateCard);
+      card.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          activateCard();
+        }
+      });
+
+      grid.append(card);
     });
 
-    item.addEventListener("click", () => {
-      if (state.maskPinyin || state.maskMeaning) {
-        item.classList.toggle("peek");
-      }
-      speak(word, item);
-    });
-    els.wordList.append(item);
-  });
+    section.append(header, grid);
+    rootFrag.append(section);
+  }
+
+  els.wordList.replaceChildren(rootFrag);
+}
+
+// Sequential Playlist ("連続聞き流し")
+function stopSequentialPlay() {
+  if (!state.seqPlaying) return;
+  state.seqPlaying = false;
+  state.seqToken += 1;
+  stopCurrentAudio();
+  els.seqPlayBtn.classList.remove("active");
+  els.seqPlayBtn.setAttribute("aria-pressed", "false");
+  els.seqPlayBtn.querySelector(".seqPlayIcon").outerHTML = `<span class="seqPlayIcon">${SVG.playSmall}</span>`;
+  els.seqPlayLabel.textContent = "連続聞き流し";
+}
+
+async function startSequentialPlay() {
+  const words = filteredBankWords();
+  if (!words.length) return;
+
+  state.seqPlaying = true;
+  const myToken = ++state.seqToken;
+  els.seqPlayBtn.classList.add("active");
+  els.seqPlayBtn.setAttribute("aria-pressed", "true");
+  els.seqPlayBtn.querySelector(".seqPlayIcon").outerHTML = `<span class="seqPlayIcon">${SVG.stopSmall}</span>`;
+
+  for (let i = 0; i < words.length; i++) {
+    if (!state.seqPlaying || state.seqToken !== myToken) break;
+    const word = words[i];
+    els.seqPlayLabel.textContent = `停止 (${i + 1}/${words.length})`;
+    const cardEl = els.wordList.querySelector(`[data-word-id="${CSS.escape(word.id)}"]`);
+    cardEl?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    await speak(word, cardEl);
+    if (!state.seqPlaying || state.seqToken !== myToken) break;
+    await new Promise(r => setTimeout(r, 750));
+  }
+
+  if (state.seqToken === myToken) {
+    stopSequentialPlay();
+  }
+}
+
+function setView(view) {
+  if (view !== "bank") stopSequentialPlay();
+  state.view = view;
+  const isQuiz = view === "quiz";
+
+  els.tabQuiz.classList.toggle("active", isQuiz);
+  els.tabQuiz.setAttribute("aria-selected", String(isQuiz));
+  els.tabQuiz.tabIndex = isQuiz ? 0 : -1;
+
+  els.tabBank.classList.toggle("active", !isQuiz);
+  els.tabBank.setAttribute("aria-selected", String(!isQuiz));
+  els.tabBank.tabIndex = !isQuiz ? 0 : -1;
+
+  els.panelQuiz.hidden = !isQuiz;
+  els.panelBank.hidden = isQuiz;
+  els.modeFieldWrap.hidden = !isQuiz;
+
+  if (!isQuiz) {
+    renderWordList();
+  } else if (!state.current && !state.mistakesOnly) {
+    nextQuestion();
+  }
 }
 
 function applyColorMode() {
   document.body.dataset.colorMode = state.colorMode;
-  els.themeIcon.textContent = state.colorMode === "dark" ? "☀️" : "🌙";
   localStorage.setItem("cnQuizColorMode", state.colorMode);
 }
 
 function setExam(exam, { autoSpeak = false } = {}) {
+  stopSequentialPlay();
   state.exam = exam;
   state.lesson = "all";
   state.mistakesOnly = false;
@@ -1593,19 +1869,56 @@ function setExam(exam, { autoSpeak = false } = {}) {
 
   renderLessons();
   rebuildDeck();
-  renderWordList();
+  updateStats();
+  if (state.view === "bank") {
+    renderWordList();
+  }
   nextQuestion({ autoSpeak });
 }
 
-// Event Listeners
+// ==================== Event Listeners ====================
+
+els.tabQuiz.addEventListener("click", () => setView("quiz"));
+els.tabBank.addEventListener("click", () => setView("bank"));
+
+// Arrow-key navigation on tablists (WCAG ARIA tabs pattern)
+document.querySelectorAll('[role="tablist"]').forEach(tablist => {
+  tablist.addEventListener("keydown", e => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    const tabs = [...tablist.querySelectorAll('[role="tab"]')];
+    const idx = tabs.indexOf(document.activeElement);
+    if (idx < 0) return;
+    e.preventDefault();
+    const nextIdx = e.key === "ArrowRight"
+      ? (idx + 1) % tabs.length
+      : (idx - 1 + tabs.length) % tabs.length;
+    tabs[nextIdx].focus();
+    tabs[nextIdx].click();
+  });
+});
+
 els.themeToggle.addEventListener("click", () => {
   state.colorMode = state.colorMode === "dark" ? "light" : "dark";
   applyColorMode();
 });
 
-els.mode.addEventListener("change", () => {
-  state.mode = els.mode.value;
-  nextQuestion({ autoSpeak: true });
+els.shortcutHelpBtn.addEventListener("click", e => {
+  e.stopPropagation();
+  const open = els.shortcutPopover.hidden;
+  els.shortcutPopover.hidden = !open;
+  els.shortcutHelpBtn.setAttribute("aria-expanded", String(open));
+});
+
+els.closeShortcuts.addEventListener("click", () => {
+  els.shortcutPopover.hidden = true;
+  els.shortcutHelpBtn.setAttribute("aria-expanded", "false");
+});
+
+document.addEventListener("click", e => {
+  if (!els.shortcutPopover.hidden && !els.shortcutPopover.contains(e.target) && e.target !== els.shortcutHelpBtn) {
+    els.shortcutPopover.hidden = true;
+    els.shortcutHelpBtn.setAttribute("aria-expanded", "false");
+  }
 });
 
 els.examButtons.forEach(button => {
@@ -1616,9 +1929,19 @@ els.examButtons.forEach(button => {
 });
 
 els.lesson.addEventListener("change", () => {
+  stopSequentialPlay();
   state.lesson = els.lesson.value;
   rebuildDeck();
-  renderWordList();
+  updateStats();
+  if (state.view === "bank") {
+    renderWordList();
+  } else {
+    nextQuestion({ autoSpeak: true });
+  }
+});
+
+els.mode.addEventListener("change", () => {
+  state.mode = els.mode.value;
   nextQuestion({ autoSpeak: true });
 });
 
@@ -1636,11 +1959,11 @@ els.hardModeToggle.addEventListener("click", () => {
   els.hardModeToggle.setAttribute("aria-pressed", String(state.hardMode));
   if (state.current && !state.answered) {
     [...els.options.children].forEach((btn, idx) => {
-      btn.innerHTML = `<span class="optKey">${idx + 1}</span>${renderOptionContent(state.current.options[idx], false)}`;
+      btn.innerHTML = renderOptionInner(state.current.options[idx], idx, "idle");
     });
     els.questionHint.textContent = state.hardMode
-      ? "本番モード中：補助ヒントなしで聞き取りに挑戦！"
-      : "耳だけで聞き取って選択。回答後は各選択肢をタップして音を聞き比べられます。";
+      ? "本番モード：補助ラベルを非表示にしています。耳だけで判断しましょう。"
+      : "回答すると意味が表示され、他の選択肢もタップして発音を聞き比べられます。";
   }
 });
 
@@ -1648,6 +1971,20 @@ els.mistakesOnly.addEventListener("click", () => {
   state.mistakesOnly = !state.mistakesOnly;
   els.mistakesOnly.classList.toggle("active", state.mistakesOnly);
   els.mistakesOnly.setAttribute("aria-pressed", String(state.mistakesOnly));
+  rebuildDeck();
+  nextQuestion({ autoSpeak: state.mistakesOnly });
+});
+
+els.exitMistakesBtn.addEventListener("click", () => {
+  state.mistakesOnly = false;
+  els.mistakesOnly.classList.remove("active");
+  els.mistakesOnly.setAttribute("aria-pressed", "false");
+  rebuildDeck();
+  nextQuestion({ autoSpeak: true });
+});
+
+els.shuffleDeck.addEventListener("click", () => {
+  state.userInteracted = true;
   rebuildDeck();
   nextQuestion({ autoSpeak: true });
 });
@@ -1661,23 +1998,44 @@ els.mistakesOnly.addEventListener("click", () => {
   });
 });
 
+els.toggleStudioBtn.addEventListener("click", () => {
+  const willOpen = els.studioDrawer.hidden;
+  els.studioDrawer.hidden = !willOpen;
+  els.toggleStudioBtn.setAttribute("aria-expanded", String(willOpen));
+});
+
+// Inline two-step Reset Confirmation (no browser alert/confirm)
 els.resetStats.addEventListener("click", () => {
-  if (!confirm("これまでの回答数・正答率・要復習リストをリセットしますか？")) return;
+  els.resetStats.hidden = true;
+  els.resetConfirmBar.hidden = false;
+});
+
+els.confirmResetNo.addEventListener("click", () => {
+  els.resetConfirmBar.hidden = true;
+  els.resetStats.hidden = false;
+});
+
+els.confirmResetYes.addEventListener("click", () => {
   state.stats = { total: 0, correct: 0, streak: 0, mistakes: {}, stars: {} };
   saveStats();
+  els.resetConfirmBar.hidden = true;
+  els.resetStats.hidden = false;
   updateStats();
-  renderWordList();
+  if (state.mistakesOnly) {
+    rebuildDeck();
+    nextQuestion();
+  }
+  if (state.view === "bank") renderWordList();
 });
 
 els.playWord.addEventListener("click", () => speak(state.current?.word));
 els.replay.addEventListener("click", () => speak(state.current?.word));
-els.next.addEventListener("click", () => {
+els.skipQuestion.addEventListener("click", () => {
   state.userInteracted = true;
   nextQuestion({ autoSpeak: true });
 });
-els.shuffleDeck.addEventListener("click", () => {
+els.next.addEventListener("click", () => {
   state.userInteracted = true;
-  rebuildDeck();
   nextQuestion({ autoSpeak: true });
 });
 
@@ -1705,31 +2063,83 @@ els.audioResetOne.addEventListener("click", () => {
   speak(state.current.word);
 });
 
+// Wordbook Controls
+els.maskHanzi.addEventListener("click", () => {
+  state.maskHanzi = !state.maskHanzi;
+  els.maskHanzi.classList.toggle("active", state.maskHanzi);
+  els.maskHanzi.setAttribute("aria-pressed", String(state.maskHanzi));
+  renderWordList();
+});
+
 els.maskPinyin.addEventListener("click", () => {
   state.maskPinyin = !state.maskPinyin;
   els.maskPinyin.classList.toggle("active", state.maskPinyin);
+  els.maskPinyin.setAttribute("aria-pressed", String(state.maskPinyin));
   renderWordList();
 });
 
 els.maskMeaning.addEventListener("click", () => {
   state.maskMeaning = !state.maskMeaning;
   els.maskMeaning.classList.toggle("active", state.maskMeaning);
+  els.maskMeaning.setAttribute("aria-pressed", String(state.maskMeaning));
   renderWordList();
 });
 
 els.bankStarFilter.addEventListener("click", () => {
+  stopSequentialPlay();
   state.bankStarOnly = !state.bankStarOnly;
   els.bankStarFilter.classList.toggle("active", state.bankStarOnly);
+  els.bankStarFilter.setAttribute("aria-pressed", String(state.bankStarOnly));
   renderWordList();
 });
 
-els.search.addEventListener("input", renderWordList);
+els.seqPlayBtn.addEventListener("click", () => {
+  if (state.seqPlaying) {
+    stopSequentialPlay();
+  } else {
+    startSequentialPlay();
+  }
+});
 
-// Keyboard Shortcuts
+els.search.addEventListener("input", () => {
+  stopSequentialPlay();
+  renderWordList();
+});
+
+els.clearSearch.addEventListener("click", () => {
+  stopSequentialPlay();
+  els.search.value = "";
+  renderWordList();
+  els.search.focus();
+});
+
+// Global Keyboard Shortcuts
 document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && !els.shortcutPopover.hidden) {
+    els.shortcutPopover.hidden = true;
+    els.shortcutHelpBtn.setAttribute("aria-expanded", "false");
+    return;
+  }
+
   const tag = document.activeElement?.tagName;
   if (tag === "INPUT" || tag === "SELECT" || tag === "TEXTAREA") return;
   if (event.metaKey || event.ctrlKey || event.altKey) return;
+
+  if (event.key === "?") {
+    event.preventDefault();
+    const open = els.shortcutPopover.hidden;
+    els.shortcutPopover.hidden = !open;
+    els.shortcutHelpBtn.setAttribute("aria-expanded", String(open));
+    return;
+  }
+
+  if (event.key.toLowerCase() === "v") {
+    event.preventDefault();
+    setView(state.view === "quiz" ? "bank" : "quiz");
+    return;
+  }
+
+  if (state.view !== "quiz" || els.quizCard.hidden) return;
 
   if (["1", "2", "3", "4"].includes(event.key)) {
     event.preventDefault();
@@ -1737,12 +2147,15 @@ document.addEventListener("keydown", event => {
     if (!state.answered) {
       answer(idx);
     } else if (state.current?.options[idx]) {
-      speak(state.current.options[idx].word);
+      const btn = els.options.children[idx];
+      speak(state.current.options[idx].word, btn);
     }
   } else if (event.key.toLowerCase() === "r") {
     event.preventDefault();
     speak(state.current?.word);
   } else if (event.key === " ") {
+    // Only intercept Space if focus isn't on another button (except option/play buttons)
+    if (tag === "BUTTON" && !els.quizCard.contains(document.activeElement)) return;
     event.preventDefault();
     if (!state.answered) {
       speak(state.current?.word);
@@ -1751,6 +2164,7 @@ document.addEventListener("keydown", event => {
       nextQuestion({ autoSpeak: true });
     }
   } else if (event.key === "Enter" || event.key === "ArrowRight") {
+    if (tag === "BUTTON" && event.key === "Enter" && document.activeElement?.id !== "dockNextBtn") return;
     event.preventDefault();
     state.userInteracted = true;
     nextQuestion({ autoSpeak: true });
@@ -1758,8 +2172,7 @@ document.addEventListener("keydown", event => {
     event.preventDefault();
     toggleStar(state.current.word);
     if (state.answered) {
-      const chosen = [...els.options.children].findIndex(el => el.classList.contains("wrong"));
-      renderFeedbackCard(state.current.word, chosen === -1);
+      renderDockReveal(state.current.word, state.current.lastResultCorrect);
     }
   }
 });
@@ -1769,7 +2182,7 @@ if ("speechSynthesis" in window) {
   window.speechSynthesis.addEventListener("voiceschanged", loadVoices);
 }
 
-// Initialize toggles UI & exam
+// Initialize UI
 applyColorMode();
 els.autoPlayToggle.classList.toggle("active", state.autoPlay);
 els.autoPlayToggle.setAttribute("aria-pressed", String(state.autoPlay));
