@@ -325,10 +325,264 @@ const SECOND_DATA = [
   {lesson:"102", hanzi:"多长时间", pinyin:"duō cháng shíjiān", meaning:"どれだけの時間"}
 ];
 
+const THIRD_DATA = [
+  // 第12課 (110)
+  {lesson:"110", chapter:"12", hanzi:"大家好", pinyin:"dàjiā hǎo", meaning:"みなさん、こんにちは"},
+  {lesson:"110", chapter:"12", hanzi:"了", pinyin:"le", meaning:"〜になる、〜になった／〜してしまう、〜した"},
+  {lesson:"110", chapter:"12", hanzi:"开始", pinyin:"kāishǐ", meaning:"始める、始まる"},
+  {lesson:"110", chapter:"12", hanzi:"中文", pinyin:"Zhōngwén", meaning:"中国語"},
+  {lesson:"110", chapter:"12", hanzi:"已经", pinyin:"yǐjīng", meaning:"すでに、もう"},
+  {lesson:"110", chapter:"12", hanzi:"半年", pinyin:"bànnián", meaning:"半年"},
+  {lesson:"110", chapter:"12", hanzi:"还", pinyin:"hái", meaning:"まだ、やはり、その上"},
+  {lesson:"110", chapter:"12", hanzi:"没 / 没有", pinyin:"méi / méiyou", meaning:"〜していない、〜しなかった（完了の「了」の否定）"},
+  {lesson:"110", chapter:"12", hanzi:"时候", pinyin:"shíhou", meaning:"時"},
+  {lesson:"110", chapter:"12", hanzi:"以为", pinyin:"yǐwéi", meaning:"〜と思い込む"},
+  {lesson:"110", chapter:"12", hanzi:"容易", pinyin:"róngyì", meaning:"簡単だ、やさしい"},
+  {lesson:"110", chapter:"12", hanzi:"后来", pinyin:"hòulái", meaning:"その後"},
+  {lesson:"110", chapter:"12", hanzi:"发现", pinyin:"fāxiàn", meaning:"気付く"},
+  {lesson:"110", chapter:"12", hanzi:"发音", pinyin:"fāyīn", meaning:"発音"},
+  {lesson:"110", chapter:"12", hanzi:"太〜了", pinyin:"tài ~ le", meaning:"とても〜、あまりにも〜"},
+  {lesson:"110", chapter:"12", hanzi:"比如说", pinyin:"bǐrú shuō", meaning:"例えば"},
+  {lesson:"110", chapter:"12", hanzi:"每个", pinyin:"měi ge", meaning:"毎〜"},
+  {lesson:"110", chapter:"12", hanzi:"上课", pinyin:"shàngkè", meaning:"授業を受ける、授業をする"},
+  {lesson:"110", chapter:"12", hanzi:"上", pinyin:"shàng", meaning:"（授業に）出る、（学校に）通う"},
+  {lesson:"110", chapter:"12", hanzi:"节", pinyin:"jié", meaning:"〜コマ（授業などの区切りを数える）"},
+  {lesson:"110", chapter:"12", hanzi:"课", pinyin:"kè", meaning:"授業"},
+  {lesson:"110", chapter:"12", hanzi:"但是", pinyin:"dànshì", meaning:"しかし"},
+  {lesson:"110", chapter:"12", hanzi:"音", pinyin:"yīn", meaning:"音"},
+  {lesson:"110", chapter:"12", hanzi:"掌握", pinyin:"zhǎngwò", meaning:"身につける、マスターする"},
+  {lesson:"110", chapter:"12", hanzi:"以前", pinyin:"yǐqián", meaning:"〜する前、〜より前"},
+  {lesson:"110", chapter:"12", hanzi:"英文", pinyin:"Yīngwén", meaning:"英語"},
+  {lesson:"110", chapter:"12", hanzi:"主要", pinyin:"zhǔyào", meaning:"主に"},
+  {lesson:"110", chapter:"12", hanzi:"语法", pinyin:"yǔfǎ", meaning:"文法"},
+  {lesson:"110", chapter:"12", hanzi:"翻译", pinyin:"fānyì", meaning:"翻訳する、通訳する"},
+  {lesson:"110", chapter:"12", hanzi:"觉得", pinyin:"juéde", meaning:"〜と感じる、〜と思う"},
+  {lesson:"110", chapter:"12", hanzi:"可能", pinyin:"kěnéng", meaning:"おそらく、〜かもしれない"},
+  {lesson:"110", chapter:"12", hanzi:"经历", pinyin:"jīnglì", meaning:"経歴、経験／経験する"},
+  {lesson:"110", chapter:"12", hanzi:"关系", pinyin:"guānxi", meaning:"関係"},
+  {lesson:"110", chapter:"12", hanzi:"今后", pinyin:"jīnhòu", meaning:"今後、これから"},
+  {lesson:"110", chapter:"12", hanzi:"一定", pinyin:"yídìng", meaning:"きっと、必ず"},
+  {lesson:"110", chapter:"12", hanzi:"努力", pinyin:"nǔlì", meaning:"一生懸命である"},
+  {lesson:"110", chapter:"12", hanzi:"请", pinyin:"qǐng", meaning:"どうぞ〜、頼む"},
+  {lesson:"110", chapter:"12", hanzi:"大家", pinyin:"dàjiā", meaning:"みなさん"},
+  {lesson:"110", chapter:"12", hanzi:"多多指教", pinyin:"duōduō zhǐjiào", meaning:"ご指導をお願いします"},
+
+  // 第12課 (111)
+  {lesson:"111", chapter:"12", hanzi:"女朋友", pinyin:"nǚpéngyou", meaning:"ガールフレンド、彼女"},
+  {lesson:"111", chapter:"12", hanzi:"肚子", pinyin:"dùzi", meaning:"おなか"},
+  {lesson:"111", chapter:"12", hanzi:"饿", pinyin:"è", meaning:"おなかが減っている"},
+  {lesson:"111", chapter:"12", hanzi:"爷爷", pinyin:"yéye", meaning:"父方の祖父"},
+  {lesson:"111", chapter:"12", hanzi:"生病", pinyin:"shēngbìng", meaning:"病気になる"},
+  {lesson:"111", chapter:"12", hanzi:"包子", pinyin:"bāozi", meaning:"中華まん"},
+  {lesson:"111", chapter:"12", hanzi:"丈夫", pinyin:"zhàngfu", meaning:"夫"},
+  {lesson:"111", chapter:"12", hanzi:"上海", pinyin:"Shànghǎi", meaning:"上海（地名）"},
+  {lesson:"111", chapter:"12", hanzi:"午饭", pinyin:"wǔfàn", meaning:"昼ご飯"},
+  {lesson:"111", chapter:"12", hanzi:"药", pinyin:"yào", meaning:"薬"},
+  {lesson:"111", chapter:"12", hanzi:"见面", pinyin:"jiànmiàn", meaning:"会う"},
+  {lesson:"111", chapter:"12", hanzi:"王", pinyin:"Wáng", meaning:"王（姓）"},
+  {lesson:"111", chapter:"12", hanzi:"帮忙", pinyin:"bāngmáng", meaning:"手伝う、助ける"},
+
+  // 第13課 (118)
+  {lesson:"118", chapter:"13", hanzi:"村井莉加", pinyin:"Cūnjǐng Lìjiā", meaning:"村井莉加（人名）", quiz:false},
+  {lesson:"118", chapter:"13", hanzi:"喂", pinyin:"wéi", meaning:"もしもし（電話の呼びかけ）"},
+  {lesson:"118", chapter:"13", hanzi:"杨泰龙", pinyin:"Yáng Tàilóng", meaning:"楊泰龍（人名）", quiz:false},
+  {lesson:"118", chapter:"13", hanzi:"想", pinyin:"xiǎng", meaning:"〜したい"},
+  {lesson:"118", chapter:"13", hanzi:"京剧", pinyin:"Jīngjù", meaning:"京劇"},
+  {lesson:"118", chapter:"13", hanzi:"过", pinyin:"guo", meaning:"〜したことがある"},
+  {lesson:"118", chapter:"13", hanzi:"梨园剧场", pinyin:"Líyuán Jùchǎng", meaning:"梨園劇場（北京の劇場名）", quiz:false},
+  {lesson:"118", chapter:"13", hanzi:"次", pinyin:"cì", meaning:"〜回"},
+  {lesson:"118", chapter:"13", hanzi:"离", pinyin:"lí", meaning:"〜から、〜まで"},
+  {lesson:"118", chapter:"13", hanzi:"北大", pinyin:"Běi Dà", meaning:"北京大学の略称"},
+  {lesson:"118", chapter:"13", hanzi:"远", pinyin:"yuǎn", meaning:"遠い"},
+  {lesson:"118", chapter:"13", hanzi:"虎坊桥", pinyin:"Hǔfāngqiáo", meaning:"虎坊橋（北京の地名）", quiz:false},
+  {lesson:"118", chapter:"13", hanzi:"地铁", pinyin:"dìtiě", meaning:"地下鉄"},
+  {lesson:"118", chapter:"13", hanzi:"从", pinyin:"cóng", meaning:"〜から"},
+  {lesson:"118", chapter:"13", hanzi:"到", pinyin:"dào", meaning:"〜まで"},
+  {lesson:"118", chapter:"13", hanzi:"走", pinyin:"zǒu", meaning:"行く、歩く"},
+  {lesson:"118", chapter:"13", hanzi:"先", pinyin:"xiān", meaning:"まず、先に"},
+  {lesson:"118", chapter:"13", hanzi:"四号线", pinyin:"Sìhào Xiàn", meaning:"4号線（地下鉄の路線名）"},
+  {lesson:"118", chapter:"13", hanzi:"然后", pinyin:"ránhòu", meaning:"それから、その後"},
+  {lesson:"118", chapter:"13", hanzi:"菜市口", pinyin:"Càishìkǒu", meaning:"菜市口（北京の地名）", quiz:false},
+  {lesson:"118", chapter:"13", hanzi:"站", pinyin:"zhàn", meaning:"駅、バス停"},
+  {lesson:"118", chapter:"13", hanzi:"换", pinyin:"huàn", meaning:"乗り換える"},
+  {lesson:"118", chapter:"13", hanzi:"七号线", pinyin:"Qīhào Xiàn", meaning:"7号線（地下鉄の路線名）"},
+  {lesson:"118", chapter:"13", hanzi:"站", pinyin:"zhàn", meaning:"〜駅（駅の数を数える）"},
+  {lesson:"118", chapter:"13", hanzi:"就", pinyin:"jiù", meaning:"〜ならば…する（条件を受けて結論を表す）"},
+  {lesson:"118", chapter:"13", hanzi:"到", pinyin:"dào", meaning:"着く、到着する"},
+  {lesson:"118", chapter:"13", hanzi:"挂", pinyin:"guà", meaning:"（電話を）切る"},
+
+  // 第13課 (119)
+  {lesson:"119", chapter:"13", hanzi:"没 / 没有〜过", pinyin:"méi / méiyou ~ guo", meaning:"〜したことがない（「过」の否定）"},
+  {lesson:"119", chapter:"13", hanzi:"从来", pinyin:"cónglái", meaning:"いままで、これまで"},
+  {lesson:"119", chapter:"13", hanzi:"说", pinyin:"shuō", meaning:"言う、話す"},
+  {lesson:"119", chapter:"13", hanzi:"涮羊肉", pinyin:"shuànyángròu", meaning:"羊肉のしゃぶしゃぶ", quiz:false},
+  {lesson:"119", chapter:"13", hanzi:"要", pinyin:"yào", meaning:"〜したい、〜するつもりだ、〜しなければならない"},
+  {lesson:"119", chapter:"13", hanzi:"打工", pinyin:"dǎgōng", meaning:"アルバイトする"},
+  {lesson:"119", chapter:"13", hanzi:"国外", pinyin:"guówài", meaning:"国外、海外"},
+  {lesson:"119", chapter:"13", hanzi:"不想", pinyin:"bù xiǎng", meaning:"〜したくない"},
+  {lesson:"119", chapter:"13", hanzi:"考试", pinyin:"kǎoshì", meaning:"試験／試験をする、試験を受ける"},
+  {lesson:"119", chapter:"13", hanzi:"不用", pinyin:"bú yòng", meaning:"〜する必要はない"},
+  {lesson:"119", chapter:"13", hanzi:"不要", pinyin:"bú yào", meaning:"〜してはいけない"},
+  {lesson:"119", chapter:"13", hanzi:"别", pinyin:"bié", meaning:"〜してはいけない"},
+  {lesson:"119", chapter:"13", hanzi:"先生", pinyin:"xiānsheng", meaning:"（男性に対する敬称）〜さん"},
+  {lesson:"119", chapter:"13", hanzi:"大阪", pinyin:"Dàbǎn", meaning:"大阪（地名）"},
+  {lesson:"119", chapter:"13", hanzi:"要", pinyin:"yào", meaning:"必要とする、かかる"},
+  {lesson:"119", chapter:"13", hanzi:"机场", pinyin:"jīchǎng", meaning:"空港"},
+  {lesson:"119", chapter:"13", hanzi:"近", pinyin:"jìn", meaning:"近い"},
+  {lesson:"119", chapter:"13", hanzi:"暑假", pinyin:"shǔjià", meaning:"夏休み"},
+  {lesson:"119", chapter:"13", hanzi:"超市", pinyin:"chāoshì", meaning:"スーパーマーケット"},
+  {lesson:"119", chapter:"13", hanzi:"一直", pinyin:"yìzhí", meaning:"まっすぐに"},
+  {lesson:"119", chapter:"13", hanzi:"往", pinyin:"wǎng", meaning:"〜に向かって、〜の方へ"},
+  {lesson:"119", chapter:"13", hanzi:"北", pinyin:"běi", meaning:"北、北側"},
+
+  // 第14課 (126)
+  {lesson:"126", chapter:"14", hanzi:"王亮", pinyin:"Wáng Liàng", meaning:"王亮（人名）", quiz:false},
+  {lesson:"126", chapter:"14", hanzi:"会", pinyin:"huì", meaning:"〜できる／〜するはずだ、〜する可能性がある"},
+  {lesson:"126", chapter:"14", hanzi:"一点儿", pinyin:"yìdiǎnr", meaning:"少し"},
+  {lesson:"126", chapter:"14", hanzi:"常常", pinyin:"chángcháng", meaning:"しばしば"},
+  {lesson:"126", chapter:"14", hanzi:"错", pinyin:"cuò", meaning:"〜し間違える（結果補語）"},
+  {lesson:"126", chapter:"14", hanzi:"听", pinyin:"tīng", meaning:"聞く"},
+  {lesson:"126", chapter:"14", hanzi:"歌（儿）", pinyin:"gē(r)", meaning:"歌"},
+  {lesson:"126", chapter:"14", hanzi:"懂", pinyin:"dǒng", meaning:"〜して理解する（結果補語）"},
+  {lesson:"126", chapter:"14", hanzi:"还是", pinyin:"háishi", meaning:"まだ、やはり"},
+  {lesson:"126", chapter:"14", hanzi:"有点儿", pinyin:"yǒudiǎnr", meaning:"（多く望ましくないことについて）少し"},
+  {lesson:"126", chapter:"14", hanzi:"能", pinyin:"néng", meaning:"〜できる、〜してもよい"},
+  {lesson:"126", chapter:"14", hanzi:"小说", pinyin:"xiǎoshuō", meaning:"小説"},
+  {lesson:"126", chapter:"14", hanzi:"但", pinyin:"dàn", meaning:"しかし"},
+  {lesson:"126", chapter:"14", hanzi:"可以", pinyin:"kěyǐ", meaning:"〜できる、〜してもよい"},
+  {lesson:"126", chapter:"14", hanzi:"送", pinyin:"sòng", meaning:"贈る"},
+  {lesson:"126", chapter:"14", hanzi:"完", pinyin:"wán", meaning:"〜し終わる（結果補語）"},
+
+  // 第14課 (127)
+  {lesson:"127", chapter:"14", hanzi:"教", pinyin:"jiāo", meaning:"教える"},
+  {lesson:"127", chapter:"14", hanzi:"姥爷", pinyin:"lǎoye", meaning:"母方の祖父"},
+  {lesson:"127", chapter:"14", hanzi:"支", pinyin:"zhī", meaning:"〜本（棒状のものを数える）"},
+  {lesson:"127", chapter:"14", hanzi:"钢笔", pinyin:"gāngbǐ", meaning:"ペン、万年筆"},
+  {lesson:"127", chapter:"14", hanzi:"告诉", pinyin:"gàosu", meaning:"伝える、知らせる"},
+  {lesson:"127", chapter:"14", hanzi:"再", pinyin:"zài", meaning:"再び、また"},
+  {lesson:"127", chapter:"14", hanzi:"遍", pinyin:"biàn", meaning:"（始めから終わりまで通して）〜回"},
+  {lesson:"127", chapter:"14", hanzi:"好", pinyin:"hǎo", meaning:"きちんと〜し終わる（結果補語）"},
+  {lesson:"127", chapter:"14", hanzi:"到", pinyin:"dào", meaning:"目的が達成されることを示す（結果補語）"},
+  {lesson:"127", chapter:"14", hanzi:"找", pinyin:"zhǎo", meaning:"探す"},
+  {lesson:"127", chapter:"14", hanzi:"钱包", pinyin:"qiánbāo", meaning:"財布"},
+  {lesson:"127", chapter:"14", hanzi:"话", pinyin:"huà", meaning:"話"},
+  {lesson:"127", chapter:"14", hanzi:"见", pinyin:"jiàn", meaning:"知覚して感じ取ることを示す（結果補語）"},
+  {lesson:"127", chapter:"14", hanzi:"日语", pinyin:"Rìyǔ", meaning:"日本語"},
+  {lesson:"127", chapter:"14", hanzi:"游泳", pinyin:"yóuyǒng", meaning:"泳ぐ"},
+  {lesson:"127", chapter:"14", hanzi:"游", pinyin:"yóu", meaning:"泳ぐ"},
+  {lesson:"127", chapter:"14", hanzi:"小", pinyin:"Xiǎo", meaning:"〜さん、〜くん（年下の人への親近感を示す）"},
+  {lesson:"127", chapter:"14", hanzi:"米", pinyin:"mǐ", meaning:"メートル"},
+  {lesson:"127", chapter:"14", hanzi:"借用", pinyin:"jièyòng", meaning:"借用する"},
+  {lesson:"127", chapter:"14", hanzi:"一下", pinyin:"yí xià", meaning:"（動詞の後に置いて）ちょっと（〜する）"},
+  {lesson:"127", chapter:"14", hanzi:"不行", pinyin:"bù xíng", meaning:"だめだ、いけない"},
+
+  // 第15課 (135)
+  {lesson:"135", chapter:"15", hanzi:"林柏宇", pinyin:"Lín Bǎiyǔ", meaning:"林柏宇（人名）", quiz:false},
+  {lesson:"135", chapter:"15", hanzi:"台北", pinyin:"Táiběi", meaning:"台北（地名）"},
+  {lesson:"135", chapter:"15", hanzi:"回", pinyin:"huí / hui", meaning:"〜帰る（方向補語）"},
+  {lesson:"135", chapter:"15", hanzi:"来", pinyin:"lái / lai", meaning:"〜来る（方向補語）"},
+  {lesson:"135", chapter:"15", hanzi:"凤梨酥", pinyin:"fènglísū", meaning:"パイナップルケーキ", quiz:false},
+  {lesson:"135", chapter:"15", hanzi:"尝", pinyin:"cháng", meaning:"食べてみる、味わう"},
+  {lesson:"135", chapter:"15", hanzi:"铃木葵", pinyin:"Língmù Kuí", meaning:"鈴木葵（人名）", quiz:false},
+  {lesson:"135", chapter:"15", hanzi:"台湾", pinyin:"Táiwān", meaning:"台湾"},
+  {lesson:"135", chapter:"15", hanzi:"好玩儿", pinyin:"hǎowánr", meaning:"面白く遊べる、面白い"},
+  {lesson:"135", chapter:"15", hanzi:"下次", pinyin:"xiàcì", meaning:"次回、次"},
+  {lesson:"135", chapter:"15", hanzi:"带", pinyin:"dài", meaning:"引き連れる、携帯する、持つ"},
+  {lesson:"135", chapter:"15", hanzi:"东京", pinyin:"Dōngjīng", meaning:"東京（地名）"},
+  {lesson:"135", chapter:"15", hanzi:"月份", pinyin:"yuèfèn", meaning:"（暦の上の）月"},
+
+  // 第15課 (136)
+  {lesson:"136", chapter:"15", hanzi:"跑", pinyin:"pǎo", meaning:"走る"},
+  {lesson:"136", chapter:"15", hanzi:"快点儿", pinyin:"kuài diǎnr", meaning:"さっさと、急いで"},
+  {lesson:"136", chapter:"15", hanzi:"拿", pinyin:"ná", meaning:"取る、持つ"},
+  {lesson:"136", chapter:"15", hanzi:"回", pinyin:"huí", meaning:"帰る"},
+  {lesson:"136", chapter:"15", hanzi:"电子词典", pinyin:"diànzǐ cídiǎn", meaning:"電子辞書"},
+  {lesson:"136", chapter:"15", hanzi:"下", pinyin:"xià / xia", meaning:"〜下りる（方向補語）"},
+  {lesson:"136", chapter:"15", hanzi:"进", pinyin:"jìn / jin", meaning:"〜入る（方向補語）"},
+  {lesson:"136", chapter:"15", hanzi:"出", pinyin:"chū / chu", meaning:"〜出る（方向補語）"},
+  {lesson:"136", chapter:"15", hanzi:"过", pinyin:"guò / guo", meaning:"〜過ぎる、移動する（方向補語）"},
+  {lesson:"136", chapter:"15", hanzi:"起", pinyin:"qǐ / qi", meaning:"（下から上へ）〜上がる（方向補語）"},
+  {lesson:"136", chapter:"15", hanzi:"去", pinyin:"qù / qu", meaning:"〜ゆく（方向補語）"},
+  {lesson:"136", chapter:"15", hanzi:"上", pinyin:"shàng / shang", meaning:"〜上がる（方向補語）"},
+  {lesson:"136", chapter:"15", hanzi:"站起来", pinyin:"zhàn qilai", meaning:"立ち上がる"},
+  {lesson:"136", chapter:"15", hanzi:"楼上", pinyin:"lóushàng", meaning:"上の階"},
+  {lesson:"136", chapter:"15", hanzi:"香港", pinyin:"Xiānggǎng", meaning:"香港（地名）"},
+  {lesson:"136", chapter:"15", hanzi:"礼物", pinyin:"lǐwù", meaning:"プレゼント"},
+  {lesson:"136", chapter:"15", hanzi:"李", pinyin:"Lǐ", meaning:"李（姓）", quiz:false},
+  {lesson:"136", chapter:"15", hanzi:"等", pinyin:"děng", meaning:"待つ"},
+  {lesson:"136", chapter:"15", hanzi:"累", pinyin:"lèi", meaning:"疲れている"},
+  {lesson:"136", chapter:"15", hanzi:"休息", pinyin:"xiūxi", meaning:"休む、休憩する"},
+  {lesson:"136", chapter:"15", hanzi:"散步", pinyin:"sànbù", meaning:"散歩する"},
+
+  // 第16課 (143)
+  {lesson:"143", chapter:"16", hanzi:"秋山梓", pinyin:"Qiūshān Zǐ", meaning:"秋山梓（人名）", quiz:false},
+  {lesson:"143", chapter:"16", hanzi:"以后", pinyin:"yǐhòu", meaning:"以後、その後"},
+  {lesson:"143", chapter:"16", hanzi:"胖", pinyin:"pàng", meaning:"太っている"},
+  {lesson:"143", chapter:"16", hanzi:"公斤", pinyin:"gōngjīn", meaning:"キログラム（kg）"},
+  {lesson:"143", chapter:"16", hanzi:"得", pinyin:"děi", meaning:"〜しなければならない、〜する必要がある"},
+  {lesson:"143", chapter:"16", hanzi:"运动", pinyin:"yùndòng", meaning:"運動する、スポーツをする／運動、スポーツ"},
+  {lesson:"143", chapter:"16", hanzi:"张子豪", pinyin:"Zhāng Zǐháo", meaning:"張子豪（人名）", quiz:false},
+  {lesson:"143", chapter:"16", hanzi:"喜欢", pinyin:"xǐhuan", meaning:"好きである"},
+  {lesson:"143", chapter:"16", hanzi:"打棒球", pinyin:"dǎ bàngqiú", meaning:"野球をする"},
+  {lesson:"143", chapter:"16", hanzi:"不过", pinyin:"búguò", meaning:"しかし"},
+  {lesson:"143", chapter:"16", hanzi:"踢足球", pinyin:"tī zúqiú", meaning:"サッカーをする"},
+  {lesson:"143", chapter:"16", hanzi:"得", pinyin:"de", meaning:"〜するのが…だ"},
+  {lesson:"143", chapter:"16", hanzi:"可是", pinyin:"kěshì", meaning:"しかし"},
+  {lesson:"143", chapter:"16", hanzi:"下星期天", pinyin:"xià xīngqītiān", meaning:"来週の日曜日"},
+  {lesson:"143", chapter:"16", hanzi:"参加", pinyin:"cānjiā", meaning:"参加する"},
+  {lesson:"143", chapter:"16", hanzi:"比赛", pinyin:"bǐsài", meaning:"試合"},
+  {lesson:"143", chapter:"16", hanzi:"应该", pinyin:"yīnggāi", meaning:"〜すべきである"},
+  {lesson:"143", chapter:"16", hanzi:"好好儿", pinyin:"hǎohāor", meaning:"十分に、しっかりと"},
+  {lesson:"143", chapter:"16", hanzi:"地", pinyin:"de", meaning:"他の語句の後に置いて、連用修飾語を作る"},
+  {lesson:"143", chapter:"16", hanzi:"练习", pinyin:"liànxí", meaning:"練習する"},
+  {lesson:"143", chapter:"16", hanzi:"要是", pinyin:"yàoshi", meaning:"もし〜なら"},
+  {lesson:"143", chapter:"16", hanzi:"空（儿）", pinyin:"kòng(r)", meaning:"ひま、あいた時間"},
+
+  // 第16課 (144)
+  {lesson:"144", chapter:"16", hanzi:"轻轻地", pinyin:"qīngqīng de", meaning:"軽く、そっと"},
+  {lesson:"144", chapter:"16", hanzi:"关", pinyin:"guān", meaning:"閉じる、閉める"},
+  {lesson:"144", chapter:"16", hanzi:"上", pinyin:"shàng / shang", meaning:"対象・目的に到達することなどを表す（方向補語）"},
+  {lesson:"144", chapter:"16", hanzi:"门", pinyin:"mén", meaning:"門、ドア"},
+  {lesson:"144", chapter:"16", hanzi:"民主", pinyin:"mínzhǔ", meaning:"民主的である"},
+  {lesson:"144", chapter:"16", hanzi:"解决", pinyin:"jiějué", meaning:"解決する"},
+  {lesson:"144", chapter:"16", hanzi:"问题", pinyin:"wèntí", meaning:"問題"},
+  {lesson:"144", chapter:"16", hanzi:"快", pinyin:"kuài", meaning:"速い"},
+  {lesson:"144", chapter:"16", hanzi:"唱", pinyin:"chàng", meaning:"歌う"},
+  {lesson:"144", chapter:"16", hanzi:"写", pinyin:"xiě", meaning:"書く"},
+  {lesson:"144", chapter:"16", hanzi:"漂亮", pinyin:"piàoliang", meaning:"美しい、きれいである"},
+  {lesson:"144", chapter:"16", hanzi:"遵守", pinyin:"zūnshǒu", meaning:"遵守する、守る"},
+  {lesson:"144", chapter:"16", hanzi:"校规", pinyin:"xiàoguī", meaning:"校則、学校の規則"},
+  {lesson:"144", chapter:"16", hanzi:"年轻", pinyin:"niánqīng", meaning:"若い"},
+  {lesson:"144", chapter:"16", hanzi:"干", pinyin:"gàn", meaning:"する、やる"},
+  {lesson:"144", chapter:"16", hanzi:"种", pinyin:"zhǒng", meaning:"種類"},
+  {lesson:"144", chapter:"16", hanzi:"研究", pinyin:"yánjiū", meaning:"研究する、検討する"}
+];
+
+const seenBaseKeys = new Map();
 const DATA = [
   ...FIRST_DATA.map(word => ({ ...word, exam: "first" })),
-  ...SECOND_DATA.map(word => ({ ...word, exam: "second" }))
-];
+  ...SECOND_DATA.map(word => ({ ...word, exam: "second" })),
+  ...THIRD_DATA.map(word => ({ ...word, exam: "third" }))
+].map(word => {
+  const baseKey = `${word.lesson}:${word.hanzi}:${word.pinyin}`;
+  const count = (seenBaseKeys.get(baseKey) || 0) + 1;
+  seenBaseKeys.set(baseKey, count);
+  const id = count === 1 ? baseKey : `${baseKey}#${count}`;
+  return { ...word, baseKey, id };
+});
+
+const LESSON_LABELS = {
+  "110": "第12課① (110)",
+  "111": "第12課② (111)",
+  "118": "第13課① (118)",
+  "119": "第13課② (119)",
+  "126": "第14課① (126)",
+  "127": "第14課② (127)",
+  "135": "第15課① (135)",
+  "136": "第15課② (136)",
+  "143": "第16課① (143)",
+  "144": "第16課② (144)"
+};
 
 const AUDIO_SKIPS = [
   { lesson: "081", beforeHanzi: "请问", count: 1 },
@@ -338,7 +592,12 @@ const AUDIO_SKIPS = [
   { lesson: "064", beforeHanzi: "同学", count: 1 },
   { lesson: "072", beforeHanzi: "做", count: 1 },
   { lesson: "072", beforeHanzi: "不错", count: 2 },
-  { lesson: "072", beforeHanzi: "辣", count: 1 }
+  { lesson: "072", beforeHanzi: "辣", count: 1 },
+  { lesson: "110", beforeHanzi: "大家好", count: 1 },
+  { lesson: "118", beforeHanzi: "村井莉加", count: 1 },
+  { lesson: "126", beforeHanzi: "王亮", count: 1 },
+  { lesson: "135", beforeHanzi: "林柏宇", count: 1 },
+  { lesson: "143", beforeHanzi: "秋山梓", count: 1 }
 ];
 
 const AUDIO_SPANS = {
@@ -349,7 +608,9 @@ const AUDIO_SPANS = {
   "056:那些:nàxie / nèixie": 2,
   "056:哪些:nǎxie / něixie": 2,
   "064:没 / 没有:méi / méiyǒu": 2,
-  "089:这边（儿）:zhèbian(r) / zhèibian(r)": 2
+  "089:这边（儿）:zhèbian(r) / zhèibian(r)": 2,
+  "110:没 / 没有:méi / méiyou": 2,
+  "119:没 / 没有〜过:méi / méiyou ~ guo": 4
 };
 
 const AUDIO_RANGE_OFFSETS = [
@@ -398,31 +659,70 @@ const AUDIO_CLIP_PARTS = {
   "072:主食:zhǔshí": { sourceHanzi: "吧", sourceOffset: 1 }
 };
 
+function resolveInitialExam() {
+  const param = new URLSearchParams(location.search).get("test");
+  if (param === "1") return "first";
+  if (param === "2") return "second";
+  if (param === "3") return "third";
+  if (param === "all") return "all";
+  return localStorage.getItem("cnQuizLastExam") || "third";
+}
+
+const savedStats = JSON.parse(localStorage.getItem("cnQuizStats") || '{"total":0,"correct":0,"streak":0,"mistakes":{},"stars":{}}');
+if (!savedStats.mistakes) savedStats.mistakes = {};
+if (!savedStats.stars) savedStats.stars = {};
+
 const state = {
   current: null,
-  exam: new URLSearchParams(location.search).get("test") === "2" ? "second" : "first",
+  exam: resolveInitialExam(),
   mode: "mixed",
   lesson: "all",
   answered: false,
   mistakesOnly: false,
-  stats: JSON.parse(localStorage.getItem("cnQuizStats") || '{"total":0,"correct":0,"streak":0,"mistakes":{}}')
+  autoPlay: localStorage.getItem("cnQuizAutoPlay") !== "false",
+  hardMode: localStorage.getItem("cnQuizHardMode") === "true",
+  playbackRate: 1,
+  userInteracted: false,
+  maskPinyin: false,
+  maskMeaning: false,
+  bankStarOnly: false,
+  deck: [],
+  deckIndex: 0,
+  round: 1,
+  colorMode: localStorage.getItem("cnQuizColorMode") || "light",
+  stats: savedStats
 };
 
 const AUDIO_OFFSET_STORAGE_KEY = "cnQuizAudioOffsetsV2";
 const audioOffsets = JSON.parse(localStorage.getItem(AUDIO_OFFSET_STORAGE_KEY) || "{}");
 
 const els = {
+  themeToggle: document.querySelector("#themeToggle"),
+  themeIcon: document.querySelector("#themeIcon"),
   examButtons: [...document.querySelectorAll("[data-exam]")],
+  countFirst: document.querySelector("#countFirst"),
+  countSecond: document.querySelector("#countSecond"),
+  countThird: document.querySelector("#countThird"),
+  countAll: document.querySelector("#countAll"),
   examDescription: document.querySelector("#examDescription"),
   mode: document.querySelector("#mode"),
   lesson: document.querySelector("#lesson"),
+  autoPlayToggle: document.querySelector("#autoPlayToggle"),
+  hardModeToggle: document.querySelector("#hardModeToggle"),
   mistakesOnly: document.querySelector("#mistakesOnly"),
+  mistakeBadge: document.querySelector("#mistakeBadge"),
   resetStats: document.querySelector("#resetStats"),
   totalCount: document.querySelector("#totalCount"),
   accuracy: document.querySelector("#accuracy"),
   streak: document.querySelector("#streak"),
+  streakCard: document.querySelector("#streakCard"),
+  deckLabel: document.querySelector("#deckLabel"),
+  deckCounter: document.querySelector("#deckCounter"),
+  progressFill: document.querySelector("#progressFill"),
   lessonBadge: document.querySelector("#lessonBadge"),
   modeBadge: document.querySelector("#modeBadge"),
+  speedNormal: document.querySelector("#speedNormal"),
+  speedSlow: document.querySelector("#speedSlow"),
   questionTitle: document.querySelector("#questionTitle"),
   questionHint: document.querySelector("#questionHint"),
   options: document.querySelector("#options"),
@@ -430,13 +730,20 @@ const els = {
   playWord: document.querySelector("#playWord"),
   replay: document.querySelector("#replay"),
   next: document.querySelector("#next"),
+  shuffleDeck: document.querySelector("#shuffleDeck"),
   lessonAudio: document.querySelector("#lessonAudio"),
+  clipTimeBadge: document.querySelector("#clipTimeBadge"),
   voiceSelect: document.querySelector("#voiceSelect"),
   audioPrev: document.querySelector("#audioPrev"),
   audioNext: document.querySelector("#audioNext"),
+  audioResetOne: document.querySelector("#audioResetOne"),
   trackLabel: document.querySelector("#trackLabel"),
   wordCount: document.querySelector("#wordCount"),
   mistakeCount: document.querySelector("#mistakeCount"),
+  bankCountLabel: document.querySelector("#bankCountLabel"),
+  maskPinyin: document.querySelector("#maskPinyin"),
+  maskMeaning: document.querySelector("#maskMeaning"),
+  bankStarFilter: document.querySelector("#bankStarFilter"),
   search: document.querySelector("#search"),
   wordList: document.querySelector("#wordList")
 };
@@ -444,16 +751,46 @@ const els = {
 let voices = [];
 let audioContext;
 let playingSource = null;
+let playingWordEl = null;
 const segmentCache = new Map();
 
 function keyOf(word) {
-  return `${word.lesson}:${word.hanzi}:${word.pinyin}`;
+  return word.id;
+}
+
+function isFlagged(word) {
+  const id = keyOf(word);
+  return Boolean(state.stats.stars[id] || (state.stats.mistakes[id] > 0));
+}
+
+function toggleStar(word) {
+  const id = keyOf(word);
+  if (isFlagged(word)) {
+    delete state.stats.stars[id];
+    delete state.stats.mistakes[id];
+  } else {
+    state.stats.stars[id] = true;
+  }
+  saveStats();
+  updateStats();
+  renderWordList();
+}
+
+function formatLessonLabel(lesson) {
+  return LESSON_LABELS[lesson] || `第 ${lesson} 音声`;
 }
 
 function skipBefore(word) {
+  const lessonWords = DATA.filter(w => w.lesson === word.lesson);
+  const isFirstMatchingHanzi = lessonWords.find(w => w.hanzi === word.hanzi)?.id === word.id;
+  if (!isFirstMatchingHanzi) return 0;
   return AUDIO_SKIPS
     .filter(skip => skip.lesson === word.lesson && skip.beforeHanzi === word.hanzi)
     .reduce((total, skip) => total + skip.count, 0);
+}
+
+function audioSpanOf(word) {
+  return AUDIO_SPANS[word.baseKey] || 1;
 }
 
 function audioItemCount(lesson) {
@@ -467,13 +804,9 @@ function audioItemCount(lesson) {
   return visibleCount + hiddenCount + extraDetectedItems;
 }
 
-function audioSpanOf(word) {
-  return AUDIO_SPANS[keyOf(word)] || 1;
-}
-
 function rangeOffsetOf(word) {
   const lessonWords = DATA.filter(candidate => candidate.lesson === word.lesson);
-  const wordIndex = lessonWords.findIndex(candidate => keyOf(candidate) === keyOf(word));
+  const wordIndex = lessonWords.findIndex(candidate => candidate.id === word.id);
   if (wordIndex < 0) return 0;
 
   return AUDIO_RANGE_OFFSETS
@@ -495,7 +828,7 @@ function audioIndexOf(word) {
   let index = 0;
   for (const item of DATA.filter(candidate => candidate.lesson === word.lesson)) {
     index += skipBefore(item);
-    if (keyOf(item) === keyOf(word)) return index + rangeOffsetOf(word);
+    if (item.id === word.id) return index + rangeOffsetOf(word);
     index += audioSpanOf(item);
   }
   return -1;
@@ -514,85 +847,191 @@ function sample(array) {
 }
 
 function shuffle(array) {
-  return [...array].sort(() => Math.random() - .5);
+  const copy = [...array];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function matchesExam(word) {
+  return state.exam === "all" ? true : word.exam === state.exam;
+}
+
+function matchesLessonFilter(word) {
+  if (state.lesson === "all") return true;
+  if (state.lesson.startsWith("ch:")) {
+    return word.chapter === state.lesson.slice(3);
+  }
+  return word.lesson === state.lesson;
+}
+
+function scopeWords() {
+  return DATA.filter(word => matchesExam(word) && word.quiz !== false && matchesLessonFilter(word));
 }
 
 function availableWords() {
-  const examWords = DATA.filter(word => word.exam === state.exam && word.quiz !== false);
-  let words = examWords;
-  if (state.lesson !== "all") words = words.filter(word => word.lesson === state.lesson);
+  const base = scopeWords();
   if (state.mistakesOnly) {
-    const misses = state.stats.mistakes;
-    words = words.filter(word => misses[keyOf(word)] > 0);
+    const flagged = base.filter(isFlagged);
+    if (flagged.length) return flagged;
   }
-  return words.length ? words : examWords.filter(word => state.lesson === "all" || word.lesson === state.lesson);
+  return base;
+}
+
+function rebuildDeck() {
+  state.deck = shuffle(availableWords());
+  state.deckIndex = 0;
+  state.round = 1;
+}
+
+function drawNextWord() {
+  const pool = availableWords();
+  if (!pool.length) return null;
+
+  // Rebuild if deck is empty or out of sync with current filter
+  const poolIds = new Set(pool.map(w => w.id));
+  const validRemaining = state.deck.slice(state.deckIndex).filter(w => poolIds.has(w.id));
+
+  if (!validRemaining.length) {
+    if (state.deck.length > 0) state.round += 1;
+    state.deck = shuffle(pool);
+    state.deckIndex = 0;
+  }
+
+  // Ensure we don't repeat the exact same word across round boundary if pool > 1
+  if (state.deckIndex === 0 && state.current && pool.length > 1 && state.deck[0].id === state.current.word.id) {
+    [state.deck[0], state.deck[1]] = [state.deck[1], state.deck[0]];
+  }
+
+  const word = state.deck[state.deckIndex];
+  state.deckIndex += 1;
+  return word;
 }
 
 function currentMode() {
   return state.mode === "mixed" ? sample(["pinyin", "hanzi"]) : state.mode;
 }
 
-async function speak(word) {
+function setPlayingIndicator(active, wordCardEl = null) {
+  els.playWord.classList.toggle("playing", active);
+  if (playingWordEl && playingWordEl !== wordCardEl) {
+    playingWordEl.classList.remove("playingWord");
+  }
+  if (wordCardEl) {
+    wordCardEl.classList.toggle("playingWord", active);
+    playingWordEl = active ? wordCardEl : null;
+  } else if (!active && playingWordEl) {
+    playingWordEl.classList.remove("playingWord");
+    playingWordEl = null;
+  }
+}
+
+async function speak(word, wordCardEl = null) {
+  if (!word) return;
+  state.userInteracted = true;
   window.speechSynthesis?.cancel();
-  const playedClip = await playOriginalClip(word);
+
+  const playedClip = await playOriginalClip(word, wordCardEl);
   if (playedClip) return;
 
   if (!("speechSynthesis" in window)) {
-    showAudioNotice("このブラウザでは単語音声を再生できません。下の原音声を使ってください。");
+    showAudioNotice("このブラウザでは単語音声を再生できません。右側の原音声プレイヤーを使ってください。");
     return;
   }
   const selectedVoice = voices.find(voice => voice.name === els.voiceSelect.value) || getBestChineseVoice();
   if (!selectedVoice) {
-    showAudioNotice("中国語音声が見つかりません。下の原音声を再生して確認してください。");
+    showAudioNotice("中国語音声が見つかりません。右側の原音声プレイヤーを再生して確認してください。");
     return;
   }
 
   const text = word.hanzi
+    .replace(/（儿）/g, "")
+    .replace(/〜/g, "")
     .replace(/\s*\/\s*/g, "、")
     .replace(/app/g, "APP");
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.voice = selectedVoice;
   utterance.lang = "zh-CN";
-  utterance.rate = .78;
+  utterance.rate = state.playbackRate < 1 ? 0.65 : 0.82;
   utterance.pitch = 1;
+  setPlayingIndicator(true, wordCardEl);
+  utterance.onend = () => setPlayingIndicator(false, wordCardEl);
+  utterance.onerror = () => setPlayingIndicator(false, wordCardEl);
   window.speechSynthesis.speak(utterance);
 }
 
 function showAudioNotice(message) {
-  els.feedback.className = "feedback bad";
-  els.feedback.textContent = message;
+  els.feedback.innerHTML = `<div class="revealCard bad"><div class="revealBody"><span class="revealMeaning">${escapeHtml(message)}</span></div></div>`;
 }
 
-async function playOriginalClip(word) {
+async function updateClipBadgeFor(word) {
+  try {
+    const entry = await getLessonSegments(word.lesson);
+    const segment = playbackSegmentFor(entry, word);
+    if (segment) {
+      els.clipTimeBadge.textContent = `${segment.start.toFixed(1)}s – ${segment.end.toFixed(1)}s`;
+    } else {
+      els.clipTimeBadge.textContent = "--:--";
+    }
+  } catch {
+    els.clipTimeBadge.textContent = "--:--";
+  }
+}
+
+async function playOriginalClip(word, wordCardEl = null) {
   try {
     if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
     if (audioContext.state === "suspended") await audioContext.resume();
     if (playingSource) {
       try { playingSource.stop(); } catch {}
       playingSource = null;
+      setPlayingIndicator(false);
     }
 
     const entry = await getLessonSegments(word.lesson);
     const segment = playbackSegmentFor(entry, word);
     if (!segment) return false;
 
+    els.clipTimeBadge.textContent = `${segment.start.toFixed(1)}s – ${segment.end.toFixed(1)}s`;
+
+    const clipDur = Math.max(0.14, segment.end - segment.start);
+    const now = audioContext.currentTime;
+    const gainNode = audioContext.createGain();
+    const fade = Math.min(0.012, clipDur * 0.15);
+    gainNode.gain.setValueAtTime(0.0001, now);
+    gainNode.gain.linearRampToValueAtTime(1.0, now + fade);
+    const realPlayDuration = clipDur / state.playbackRate;
+    gainNode.gain.setValueAtTime(1.0, now + Math.max(fade, realPlayDuration - fade));
+    gainNode.gain.linearRampToValueAtTime(0.0001, now + realPlayDuration);
+
     const source = audioContext.createBufferSource();
     source.buffer = entry.buffer;
-    source.connect(audioContext.destination);
+    source.playbackRate.value = state.playbackRate;
+    source.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
     playingSource = source;
+    setPlayingIndicator(true, wordCardEl);
+
     source.onended = () => {
-      if (playingSource === source) playingSource = null;
+      if (playingSource === source) {
+        playingSource = null;
+        setPlayingIndicator(false, wordCardEl);
+      }
     };
-    source.start(0, segment.start, Math.max(.12, segment.end - segment.start));
+    source.start(0, segment.start, clipDur);
     return true;
   } catch (error) {
     console.warn("Original clip playback failed", error);
+    setPlayingIndicator(false, wordCardEl);
     return false;
   }
 }
 
 function playbackSegmentFor(entry, word) {
-  const rule = AUDIO_CLIP_PARTS[keyOf(word)];
+  const rule = AUDIO_CLIP_PARTS[word.baseKey];
   const sourceWord = rule?.sourceHanzi
     ? DATA.find(item => item.lesson === word.lesson && item.hanzi === rule.sourceHanzi)
     : word;
@@ -616,15 +1055,15 @@ function mergePlaybackSegments(segments, index, span) {
 
 function segmentPart(buffer, segment, part) {
   const split = findQuietSplit(buffer, segment);
-  const pad = .025;
+  const pad = 0.025;
   if (part === "first") {
     return {
       start: segment.start,
-      end: Math.max(segment.start + .08, split + pad)
+      end: Math.max(segment.start + 0.08, split + pad)
     };
   }
   return {
-    start: Math.min(segment.end - .08, split - pad),
+    start: Math.min(segment.end - 0.08, split - pad),
     end: segment.end
   };
 }
@@ -635,8 +1074,8 @@ function findQuietSplit(buffer, segment) {
   const startSample = Math.max(0, Math.floor(segment.start * sampleRate));
   const endSample = Math.min(data.length - 1, Math.floor(segment.end * sampleRate));
   const center = Math.floor((startSample + endSample) / 2);
-  const radius = Math.floor((endSample - startSample) * .28);
-  const win = Math.max(64, Math.floor(sampleRate * .018));
+  const radius = Math.floor((endSample - startSample) * 0.28);
+  const win = Math.max(64, Math.floor(sampleRate * 0.018));
   let bestSample = center;
   let bestRms = Infinity;
 
@@ -653,11 +1092,13 @@ function findQuietSplit(buffer, segment) {
   return bestSample / sampleRate;
 }
 
-
 async function getLessonSegments(lesson) {
   if (segmentCache.has(lesson)) return segmentCache.get(lesson);
   const promise = fetch(`./audio/${lesson}.mp3`)
-    .then(response => response.arrayBuffer())
+    .then(response => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.arrayBuffer();
+    })
     .then(arrayBuffer => {
       if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
       return audioContext.decodeAudioData(arrayBuffer);
@@ -670,8 +1111,8 @@ async function getLessonSegments(lesson) {
 function detectSegments(buffer, expectedCount) {
   const data = buffer.getChannelData(0);
   const sampleRate = buffer.sampleRate;
-  const hop = Math.floor(sampleRate * .012);
-  const win = Math.floor(sampleRate * .026);
+  const hop = Math.floor(sampleRate * 0.012);
+  const win = Math.floor(sampleRate * 0.026);
   const frames = [];
 
   for (let start = 0; start + win < data.length; start += hop) {
@@ -681,9 +1122,9 @@ function detectSegments(buffer, expectedCount) {
   }
 
   const sorted = frames.map(frame => frame.rms).sort((a, b) => a - b);
-  const peak = sorted[Math.floor(sorted.length * .98)] || 0;
-  const noise = sorted[Math.floor(sorted.length * .30)] || 0;
-  const threshold = Math.max(.004, noise * 2.6, peak * .10);
+  const peak = sorted[Math.floor(sorted.length * 0.98)] || 0;
+  const noise = sorted[Math.floor(sorted.length * 0.30)] || 0;
+  const threshold = Math.max(0.004, noise * 2.6, peak * 0.10);
   const raw = [];
   let startTime = null;
 
@@ -691,16 +1132,31 @@ function detectSegments(buffer, expectedCount) {
     if (frame.rms > threshold && startTime === null) startTime = frame.time;
     if (frame.rms <= threshold && startTime !== null) {
       const end = frame.time + win / sampleRate;
-      if (end - startTime > .08) raw.push({ start: Math.max(0, startTime - .04), end: Math.min(buffer.duration, end + .08) });
+      if (end - startTime > 0.08) raw.push({ start: Math.max(0, startTime - 0.04), end: Math.min(buffer.duration, end + 0.08) });
       startTime = null;
     }
   }
-  if (startTime !== null) raw.push({ start: Math.max(0, startTime - .04), end: buffer.duration });
+  if (startTime !== null) raw.push({ start: Math.max(0, startTime - 0.04), end: buffer.duration });
 
-  let merged = mergeSegments(raw, .22);
-  if (merged.length > expectedCount) merged = mergeSegments(raw, .38);
+  let merged = mergeSegments(raw, 0.22);
+  if (merged.length > expectedCount) merged = mergeSegments(raw, 0.38);
   if (merged.length > expectedCount) merged = mergeShortestGaps(merged, expectedCount);
-  return merged.slice(0, expectedCount);
+
+  const sliced = merged.slice(0, expectedCount);
+
+  // Preserve soft initial consonants (ch-, sh-, c-, s-, x-, q-, t-, p-, k-, f-, h-) by gently expanding into surrounding silence
+  return sliced.map((seg, i) => {
+    const prevEnd = i > 0 ? sliced[i - 1].end : 0;
+    const nextStart = i < sliced.length - 1 ? sliced[i + 1].start : buffer.duration;
+    const leftGap = Math.max(0, seg.start - prevEnd);
+    const rightGap = Math.max(0, nextStart - seg.end);
+    const prePad = Math.min(0.14, leftGap * 0.35);
+    const postPad = Math.min(0.08, rightGap * 0.30);
+    return {
+      start: Math.max(0, seg.start - prePad),
+      end: Math.min(buffer.duration, seg.end + postPad)
+    };
+  });
 }
 
 function mergeSegments(segments, maxGap) {
@@ -736,17 +1192,8 @@ function mergeShortestGaps(segments, targetCount) {
 
 function getBestChineseVoice() {
   const preferred = [
-    "xiaoxiao",
-    "xiaoyi",
-    "xiaobei",
-    "xiaoni",
-    "xiaoxuan",
-    "ting-ting",
-    "tingting",
-    "mei-jia",
-    "meijia",
-    "sin-ji",
-    "zh"
+    "xiaoxiao", "xiaoyi", "xiaobei", "xiaoni", "xiaoxuan",
+    "ting-ting", "tingting", "mei-jia", "meijia", "sin-ji", "zh"
   ];
   return voices.find(voice => /^zh[-_]/i.test(voice.lang) && preferred.some(name => voice.name.toLowerCase().includes(name)))
     || voices.find(voice => /^zh[-_](cn|hans|sg)/i.test(voice.lang))
@@ -777,199 +1224,563 @@ function loadVoices() {
   });
 }
 
-function buildOptions(word, mode) {
-  const field = mode === "pinyin" ? "pinyin" : "hanzi";
-  const pool = DATA.filter(item =>
-    item.exam === state.exam &&
-    item.quiz !== false &&
-    keyOf(item) !== keyOf(word) &&
-    item[field] !== word[field]
-  );
-  return shuffle([word, ...shuffle(pool).slice(0, 3)]).map(item => ({
-    label: item[field],
-    sub: mode === "pinyin" ? item.hanzi : item.pinyin,
-    correct: keyOf(item) === keyOf(word)
-  }));
+function primaryPinyin(pinyin) {
+  return pinyin
+    .split("/")[0]
+    .replace(/\(r\)/gi, "")
+    .replace(/~/g, "")
+    .replace(/\s+/g, "")
+    .toLowerCase();
 }
 
-function nextQuestion() {
-  const words = availableWords();
-  const word = sample(words);
+function stripToneMarks(str) {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+function hasAudioAmbiguity(a, b) {
+  if (a.hanzi === b.hanzi) return true;
+  if (a.meaning === b.meaning) return true;
+  const pa = primaryPinyin(a.pinyin);
+  const pb = primaryPinyin(b.pinyin);
+  if (pa === pb) return true;
+  // Also avoid neutral-tone vs full-tone duplicates of identical character root like guò vs guo
+  if (stripToneMarks(pa) === stripToneMarks(pb) && a.hanzi.replace(/（儿）/g, "") === b.hanzi.replace(/（儿）/g, "")) {
+    return true;
+  }
+  return false;
+}
+
+function buildOptions(word, mode) {
+  const examPool = DATA.filter(item =>
+    matchesExam(item) &&
+    item.quiz !== false &&
+    item.id !== word.id &&
+    !hasAudioAmbiguity(item, word)
+  );
+
+  // Prefer distractors from same exam, deduplicated against each other too
+  const chosen = [];
+  for (const candidate of shuffle(examPool)) {
+    if (chosen.length >= 3) break;
+    if (chosen.some(existing => hasAudioAmbiguity(existing, candidate))) continue;
+    chosen.push(candidate);
+  }
+
+  return shuffle([word, ...chosen]).map(item => {
+    let label = item.hanzi;
+    let sub = item.pinyin;
+    let isChineseLabel = true;
+
+    if (mode === "pinyin") {
+      label = item.pinyin;
+      sub = item.hanzi;
+      isChineseLabel = false;
+    } else if (mode === "meaning") {
+      label = item.meaning;
+      sub = `${item.hanzi} · ${item.pinyin}`;
+      isChineseLabel = false;
+    }
+
+    return {
+      word: item,
+      label,
+      sub,
+      isChineseLabel,
+      isMeaningMode: mode === "meaning",
+      correct: item.id === word.id
+    };
+  });
+}
+
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function renderOptionContent(option, revealed) {
+  const mainLang = option.isChineseLabel ? ' lang="zh-CN"' : "";
+  const mainClass = option.isMeaningMode ? "optMain meaningLabel" : "optMain";
+
+  let subHtml = "";
+  if (revealed) {
+    const detail = option.isMeaningMode
+      ? `${escapeHtml(option.word.hanzi)} · ${escapeHtml(option.word.pinyin)}`
+      : `${escapeHtml(option.sub)} — ${escapeHtml(option.word.meaning)}`;
+    subHtml = `<small class="optSub" lang="zh-CN">${detail}</small>`;
+  } else if (!state.hardMode && !option.isMeaningMode) {
+    const subLang = option.isChineseLabel ? "" : ' lang="zh-CN"';
+    subHtml = `<small class="optSub"${subLang}>${escapeHtml(option.sub)}</small>`;
+  }
+
+  return `
+    <div class="optContent">
+      <span class="${mainClass}"${mainLang}>${escapeHtml(option.label)}</span>
+      ${subHtml}
+    </div>
+    <span class="optAudioHint" aria-hidden="true">${revealed ? "🔊" : ""}</span>
+  `;
+}
+
+function updateDeckProgressUI() {
+  const totalInDeck = Math.max(1, state.deck.length);
+  const currentPos = Math.min(totalInDeck, state.deckIndex);
+  els.deckLabel.textContent = state.mistakesOnly
+    ? `⭐ 要復習ラウンド ${state.round}周目`
+    : `ラウンド ${state.round}周目`;
+  els.deckCounter.textContent = `${currentPos} / ${totalInDeck} 語`;
+  els.progressFill.style.width = `${Math.round((currentPos / totalInDeck) * 100)}%`;
+}
+
+function nextQuestion({ autoSpeak = false } = {}) {
+  const word = drawNextWord();
+  if (!word) return;
   const mode = currentMode();
-  state.current = { word, mode };
+  const options = buildOptions(word, mode);
+  state.current = { word, mode, options };
   state.answered = false;
 
-  els.lessonBadge.textContent = `第 ${word.lesson} 音声`;
-  els.modeBadge.textContent = mode === "pinyin" ? "ピンインを選ぶ" : "漢字を選ぶ";
+  els.lessonBadge.textContent = formatLessonLabel(word.lesson);
+  const modeTitleMap = {
+    pinyin: "ピンインを選ぶ",
+    hanzi: "漢字を選ぶ",
+    meaning: "意味を選ぶ"
+  };
+  els.modeBadge.textContent = modeTitleMap[mode];
   els.questionTitle.textContent = "中国語音声を聞いて正解を選ぼう";
-  els.questionHint.textContent = "意味は答えた後に表示されます。まずは耳だけで挑戦。";
-  els.feedback.textContent = "";
-  els.feedback.className = "feedback";
+  els.questionHint.textContent = state.hardMode
+    ? "本番モード中：補助ヒントなしで聞き取りに挑戦！"
+    : "耳だけで聞き取って選択。回答後は各選択肢をタップして音を聞き比べられます。";
+  els.feedback.innerHTML = "";
   els.lessonAudio.src = `./audio/${word.lesson}.mp3`;
-  els.trackLabel.textContent = `第 ${word.lesson} の原音声`;
+  els.trackLabel.textContent = `${formatLessonLabel(word.lesson)} のフル原音声`;
+
+  updateDeckProgressUI();
+  updateClipBadgeFor(word);
 
   els.options.innerHTML = "";
-  buildOptions(word, mode).forEach(option => {
+  options.forEach((option, idx) => {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "option";
     button.dataset.correct = String(option.correct);
-    button.innerHTML = `${option.label}<small>${option.sub}</small>`;
-    button.addEventListener("click", () => answer(button, option.correct));
+    button.innerHTML = `<span class="optKey">${idx + 1}</span>${renderOptionContent(option, false)}`;
+    button.addEventListener("click", () => {
+      if (!state.answered) {
+        answer(idx);
+      } else {
+        speak(option.word);
+      }
+    });
     els.options.append(button);
   });
 
   updateStats();
+
+  if (autoSpeak && state.autoPlay && state.userInteracted) {
+    speak(word);
+  }
 }
 
-function answer(button, isCorrect) {
-  if (state.answered) return;
+function renderFeedbackCard(word, isCorrect) {
+  const starred = isFlagged(word);
+  const verdict = isCorrect
+    ? (state.stats.streak >= 3 ? `正解！ 🔥 ${state.stats.streak}連続` : "正解！")
+    : "惜しい！ 正解はこちら";
+
+  els.feedback.innerHTML = `
+    <div class="revealCard ${isCorrect ? "good" : "bad"}">
+      <div class="revealBody">
+        <span class="revealVerdict">${escapeHtml(verdict)}</span>
+        <div class="revealWord">
+          <span class="revealHanzi" lang="zh-CN">${escapeHtml(word.hanzi)}</span>
+          <span class="revealPinyin">${escapeHtml(word.pinyin)}</span>
+        </div>
+        <span class="revealMeaning">${escapeHtml(word.meaning)}</span>
+      </div>
+      <button id="revealStarBtn" class="starBtn ${starred ? "starred" : ""}" type="button">
+        <span>${starred ? "★ 要復習に登録中" : "☆ 要復習に追加"}</span>
+      </button>
+    </div>
+  `;
+
+  document.querySelector("#revealStarBtn")?.addEventListener("click", () => {
+    toggleStar(word);
+    renderFeedbackCard(word, isCorrect);
+  });
+}
+
+function answer(selectedIndex) {
+  if (state.answered || !state.current) return;
+  state.userInteracted = true;
   state.answered = true;
-  const { word } = state.current;
+
+  const { word, options } = state.current;
+  const chosenOption = options[selectedIndex];
+  if (!chosenOption) return;
+  const isCorrect = chosenOption.correct;
   const id = keyOf(word);
 
   state.stats.total += 1;
   if (isCorrect) {
     state.stats.correct += 1;
     state.stats.streak += 1;
-    if (state.stats.mistakes[id]) state.stats.mistakes[id] -= 1;
+    if (state.stats.mistakes[id]) {
+      state.stats.mistakes[id] -= 1;
+      if (state.stats.mistakes[id] <= 0) delete state.stats.mistakes[id];
+    }
   } else {
     state.stats.streak = 0;
     state.stats.mistakes[id] = (state.stats.mistakes[id] || 0) + 1;
   }
 
-  [...els.options.children].forEach(optionButton => {
-    optionButton.disabled = true;
-    if (optionButton === button && !isCorrect) optionButton.classList.add("wrong");
-    if (optionButton.dataset.correct === "true") optionButton.classList.add("correct");
+  [...els.options.children].forEach((optionButton, idx) => {
+    const opt = options[idx];
+    optionButton.classList.add("locked");
+    if (idx === selectedIndex && !isCorrect) optionButton.classList.add("wrong");
+    if (opt.correct) optionButton.classList.add("correct");
+    optionButton.innerHTML = `<span class="optKey">${idx + 1}</span>${renderOptionContent(opt, true)}`;
   });
 
-  els.feedback.className = `feedback ${isCorrect ? "good" : "bad"}`;
-  els.feedback.textContent = isCorrect
-    ? `正解！ ${word.hanzi} / ${word.pinyin} / ${word.meaning}`
-    : `答えは ${word.hanzi} / ${word.pinyin}。意味は「${word.meaning}」。`;
+  renderFeedbackCard(word, isCorrect);
   saveStats();
   updateStats();
+  renderWordList();
 }
 
 function updateStats() {
   els.totalCount.textContent = state.stats.total;
-  els.accuracy.textContent = state.stats.total ? `${Math.round(state.stats.correct / state.stats.total * 100)}%` : "0%";
+  els.accuracy.textContent = state.stats.total
+    ? `${Math.round((state.stats.correct / state.stats.total) * 100)}%`
+    : "0%";
   els.streak.textContent = state.stats.streak;
+  els.streakCard.classList.toggle("hot", state.stats.streak >= 5);
+
+  const examScope = DATA.filter(word => matchesExam(word) && word.quiz !== false);
+  const flaggedCount = examScope.filter(isFlagged).length;
+
   els.wordCount.textContent = availableWords().length;
-  els.mistakeCount.textContent = DATA
-    .filter(word => word.exam === state.exam && word.quiz !== false)
-    .filter(word => state.stats.mistakes[keyOf(word)] > 0)
-    .length;
+  els.mistakeCount.textContent = flaggedCount;
+  els.mistakeBadge.textContent = flaggedCount;
+
+  els.countFirst.textContent = DATA.filter(w => w.exam === "first" && w.quiz !== false).length;
+  els.countSecond.textContent = DATA.filter(w => w.exam === "second" && w.quiz !== false).length;
+  els.countThird.textContent = DATA.filter(w => w.exam === "third" && w.quiz !== false).length;
+  els.countAll.textContent = DATA.filter(w => w.quiz !== false).length;
 }
 
 function renderLessons() {
-  els.lesson.innerHTML = '<option value="all">すべて</option>';
-  [...new Set(DATA.filter(word => word.exam === state.exam).map(word => word.lesson))].forEach(lesson => {
+  els.lesson.innerHTML = '<option value="all">すべての範囲</option>';
+  const examWords = DATA.filter(word => matchesExam(word) && word.quiz !== false);
+
+  const chapters = [...new Set(examWords.map(w => w.chapter).filter(Boolean))];
+  if (chapters.length) {
+    const chGroup = document.createElement("optgroup");
+    chGroup.label = "課ごとにまとめて練習";
+    chapters.forEach(ch => {
+      const tracks = [...new Set(examWords.filter(w => w.chapter === ch).map(w => w.lesson))];
+      const count = examWords.filter(w => w.chapter === ch).length;
+      const opt = document.createElement("option");
+      opt.value = `ch:${ch}`;
+      opt.textContent = `第${ch}課まとめ (${tracks.join("・")} / ${count}語)`;
+      chGroup.append(opt);
+    });
+    els.lesson.append(chGroup);
+  }
+
+  const trackGroup = document.createElement("optgroup");
+  trackGroup.label = "音声トラック別";
+  [...new Set(examWords.map(word => word.lesson))].forEach(lesson => {
+    const count = examWords.filter(w => w.lesson === lesson).length;
     const option = document.createElement("option");
     option.value = lesson;
-    option.textContent = `第 ${lesson}`;
-    els.lesson.append(option);
+    option.textContent = `${formatLessonLabel(lesson)} (${count}語)`;
+    trackGroup.append(option);
   });
+  els.lesson.append(trackGroup);
 }
 
 function renderWordList() {
   const query = els.search.value.trim().toLowerCase();
   const words = DATA.filter(word => {
-    if (word.exam !== state.exam || word.quiz === false) return false;
-    if (state.lesson !== "all" && word.lesson !== state.lesson) return false;
-    const text = `${word.lesson} ${word.hanzi} ${word.pinyin} ${word.meaning}`.toLowerCase();
+    if (!matchesExam(word) || word.quiz === false) return false;
+    if (!matchesLessonFilter(word)) return false;
+    if (state.bankStarOnly && !isFlagged(word)) return false;
+    if (!query) return true;
+    const text = `${word.lesson} ${word.chapter || ""} ${word.hanzi} ${word.pinyin} ${stripToneMarks(word.pinyin)} ${word.meaning}`.toLowerCase();
     return text.includes(query);
   });
+
+  els.bankCountLabel.textContent = `${words.length} 語`;
+  els.wordList.classList.toggle("mask-pinyin", state.maskPinyin);
+  els.wordList.classList.toggle("mask-meaning", state.maskMeaning);
   els.wordList.innerHTML = "";
+
+  if (!words.length) {
+    els.wordList.innerHTML = `<div class="emptyState">該当する単語がありません。検索条件やフィルターを変更してください。</div>`;
+    return;
+  }
+
   words.forEach(word => {
+    const starred = isFlagged(word);
     const item = document.createElement("div");
     item.className = "word";
-    item.innerHTML = `<small>第 ${word.lesson}</small><b>${word.hanzi}</b><span>${word.pinyin}</span><small>${word.meaning}</small>`;
-    item.addEventListener("click", () => speak(word));
+    item.innerHTML = `
+      <div class="wordTop">
+        <span class="wordLesson">${escapeHtml(formatLessonLabel(word.lesson))}</span>
+        <div class="wordActions">
+          <button class="wordStar ${starred ? "starred" : ""}" type="button" aria-label="要復習スター切替" title="要復習リストに追加・解除">
+            ${starred ? "★" : "☆"}
+          </button>
+        </div>
+      </div>
+      <b lang="zh-CN">${escapeHtml(word.hanzi)}</b>
+      <span class="wPinyin">${escapeHtml(word.pinyin)}</span>
+      <small class="wMeaning">${escapeHtml(word.meaning)}</small>
+    `;
+
+    const starBtn = item.querySelector(".wordStar");
+    starBtn.addEventListener("click", e => {
+      e.stopPropagation();
+      toggleStar(word);
+    });
+
+    item.addEventListener("click", () => {
+      if (state.maskPinyin || state.maskMeaning) {
+        item.classList.toggle("peek");
+      }
+      speak(word, item);
+    });
     els.wordList.append(item);
   });
 }
 
-function setExam(exam) {
+function applyColorMode() {
+  document.body.dataset.colorMode = state.colorMode;
+  els.themeIcon.textContent = state.colorMode === "dark" ? "☀️" : "🌙";
+  localStorage.setItem("cnQuizColorMode", state.colorMode);
+}
+
+function setExam(exam, { autoSpeak = false } = {}) {
   state.exam = exam;
   state.lesson = "all";
   state.mistakesOnly = false;
+  localStorage.setItem("cnQuizLastExam", exam);
   document.body.dataset.examTheme = exam;
   els.mistakesOnly.classList.remove("active");
+  els.mistakesOnly.setAttribute("aria-pressed", "false");
   els.search.value = "";
+
   els.examButtons.forEach(button => {
     const selected = button.dataset.exam === exam;
     button.classList.toggle("active", selected);
     button.setAttribute("aria-selected", String(selected));
     button.tabIndex = selected ? 0 : -1;
   });
-  els.examDescription.textContent = exam === "second"
-    ? "第2回の単語だけを出題します（第1回の単語は含みません）"
-    : "第1回の単語だけを出題します";
+
+  const descMap = {
+    first: "第1回テスト（音声 047〜073）の単語を出題します",
+    second: "第2回テスト（音声 081〜102）の単語を出題します",
+    third: "第3回テスト（第12課〜第16課：音声 110〜144）の単語を出題します",
+    all: "第1回〜第3回のすべてのテスト範囲をまとめて出題します"
+  };
+  els.examDescription.textContent = descMap[exam] || descMap.third;
 
   const url = new URL(location.href);
-  if (exam === "second") url.searchParams.set("test", "2");
-  else url.searchParams.delete("test");
+  const paramMap = { first: "1", second: "2", third: "3", all: "all" };
+  url.searchParams.set("test", paramMap[exam] || "3");
   history.replaceState(null, "", url);
 
   renderLessons();
+  rebuildDeck();
   renderWordList();
-  nextQuestion();
+  nextQuestion({ autoSpeak });
 }
+
+// Event Listeners
+els.themeToggle.addEventListener("click", () => {
+  state.colorMode = state.colorMode === "dark" ? "light" : "dark";
+  applyColorMode();
+});
 
 els.mode.addEventListener("change", () => {
   state.mode = els.mode.value;
-  nextQuestion();
+  nextQuestion({ autoSpeak: true });
 });
 
 els.examButtons.forEach(button => {
-  button.addEventListener("click", () => setExam(button.dataset.exam));
+  button.addEventListener("click", () => {
+    state.userInteracted = true;
+    setExam(button.dataset.exam, { autoSpeak: false });
+  });
 });
 
 els.lesson.addEventListener("change", () => {
   state.lesson = els.lesson.value;
+  rebuildDeck();
   renderWordList();
-  nextQuestion();
+  nextQuestion({ autoSpeak: true });
+});
+
+els.autoPlayToggle.addEventListener("click", () => {
+  state.autoPlay = !state.autoPlay;
+  localStorage.setItem("cnQuizAutoPlay", String(state.autoPlay));
+  els.autoPlayToggle.classList.toggle("active", state.autoPlay);
+  els.autoPlayToggle.setAttribute("aria-pressed", String(state.autoPlay));
+});
+
+els.hardModeToggle.addEventListener("click", () => {
+  state.hardMode = !state.hardMode;
+  localStorage.setItem("cnQuizHardMode", String(state.hardMode));
+  els.hardModeToggle.classList.toggle("active", state.hardMode);
+  els.hardModeToggle.setAttribute("aria-pressed", String(state.hardMode));
+  if (state.current && !state.answered) {
+    [...els.options.children].forEach((btn, idx) => {
+      btn.innerHTML = `<span class="optKey">${idx + 1}</span>${renderOptionContent(state.current.options[idx], false)}`;
+    });
+    els.questionHint.textContent = state.hardMode
+      ? "本番モード中：補助ヒントなしで聞き取りに挑戦！"
+      : "耳だけで聞き取って選択。回答後は各選択肢をタップして音を聞き比べられます。";
+  }
 });
 
 els.mistakesOnly.addEventListener("click", () => {
   state.mistakesOnly = !state.mistakesOnly;
   els.mistakesOnly.classList.toggle("active", state.mistakesOnly);
-  nextQuestion();
+  els.mistakesOnly.setAttribute("aria-pressed", String(state.mistakesOnly));
+  rebuildDeck();
+  nextQuestion({ autoSpeak: true });
+});
+
+[els.speedNormal, els.speedSlow].forEach(btn => {
+  btn.addEventListener("click", () => {
+    state.playbackRate = Number(btn.dataset.rate) || 1;
+    els.speedNormal.classList.toggle("active", state.playbackRate === 1);
+    els.speedSlow.classList.toggle("active", state.playbackRate !== 1);
+    if (state.current) speak(state.current.word);
+  });
 });
 
 els.resetStats.addEventListener("click", () => {
-  state.stats = { total: 0, correct: 0, streak: 0, mistakes: {} };
+  if (!confirm("これまでの回答数・正答率・要復習リストをリセットしますか？")) return;
+  state.stats = { total: 0, correct: 0, streak: 0, mistakes: {}, stars: {} };
   saveStats();
   updateStats();
+  renderWordList();
 });
 
-els.playWord.addEventListener("click", () => speak(state.current.word));
-els.replay.addEventListener("click", () => speak(state.current.word));
+els.playWord.addEventListener("click", () => speak(state.current?.word));
+els.replay.addEventListener("click", () => speak(state.current?.word));
+els.next.addEventListener("click", () => {
+  state.userInteracted = true;
+  nextQuestion({ autoSpeak: true });
+});
+els.shuffleDeck.addEventListener("click", () => {
+  state.userInteracted = true;
+  rebuildDeck();
+  nextQuestion({ autoSpeak: true });
+});
+
 els.audioPrev.addEventListener("click", () => {
+  if (!state.current) return;
   const id = keyOf(state.current.word);
   audioOffsets[id] = (audioOffsets[id] || 0) - 1;
   saveAudioOffsets();
   speak(state.current.word);
 });
+
 els.audioNext.addEventListener("click", () => {
+  if (!state.current) return;
   const id = keyOf(state.current.word);
   audioOffsets[id] = (audioOffsets[id] || 0) + 1;
   saveAudioOffsets();
   speak(state.current.word);
 });
-els.next.addEventListener("click", nextQuestion);
+
+els.audioResetOne.addEventListener("click", () => {
+  if (!state.current) return;
+  const id = keyOf(state.current.word);
+  delete audioOffsets[id];
+  saveAudioOffsets();
+  speak(state.current.word);
+});
+
+els.maskPinyin.addEventListener("click", () => {
+  state.maskPinyin = !state.maskPinyin;
+  els.maskPinyin.classList.toggle("active", state.maskPinyin);
+  renderWordList();
+});
+
+els.maskMeaning.addEventListener("click", () => {
+  state.maskMeaning = !state.maskMeaning;
+  els.maskMeaning.classList.toggle("active", state.maskMeaning);
+  renderWordList();
+});
+
+els.bankStarFilter.addEventListener("click", () => {
+  state.bankStarOnly = !state.bankStarOnly;
+  els.bankStarFilter.classList.toggle("active", state.bankStarOnly);
+  renderWordList();
+});
+
 els.search.addEventListener("input", renderWordList);
+
+// Keyboard Shortcuts
+document.addEventListener("keydown", event => {
+  const tag = document.activeElement?.tagName;
+  if (tag === "INPUT" || tag === "SELECT" || tag === "TEXTAREA") return;
+  if (event.metaKey || event.ctrlKey || event.altKey) return;
+
+  if (["1", "2", "3", "4"].includes(event.key)) {
+    event.preventDefault();
+    const idx = Number(event.key) - 1;
+    if (!state.answered) {
+      answer(idx);
+    } else if (state.current?.options[idx]) {
+      speak(state.current.options[idx].word);
+    }
+  } else if (event.key.toLowerCase() === "r") {
+    event.preventDefault();
+    speak(state.current?.word);
+  } else if (event.key === " ") {
+    event.preventDefault();
+    if (!state.answered) {
+      speak(state.current?.word);
+    } else {
+      state.userInteracted = true;
+      nextQuestion({ autoSpeak: true });
+    }
+  } else if (event.key === "Enter" || event.key === "ArrowRight") {
+    event.preventDefault();
+    state.userInteracted = true;
+    nextQuestion({ autoSpeak: true });
+  } else if (event.key.toLowerCase() === "s" && state.current) {
+    event.preventDefault();
+    toggleStar(state.current.word);
+    if (state.answered) {
+      const chosen = [...els.options.children].findIndex(el => el.classList.contains("wrong"));
+      renderFeedbackCard(state.current.word, chosen === -1);
+    }
+  }
+});
+
 if ("speechSynthesis" in window) {
   loadVoices();
   window.speechSynthesis.addEventListener("voiceschanged", loadVoices);
 }
+
+// Initialize toggles UI & exam
+applyColorMode();
+els.autoPlayToggle.classList.toggle("active", state.autoPlay);
+els.autoPlayToggle.setAttribute("aria-pressed", String(state.autoPlay));
+els.hardModeToggle.classList.toggle("active", state.hardMode);
+els.hardModeToggle.setAttribute("aria-pressed", String(state.hardMode));
 
 setExam(state.exam);
 
 window.quizDebug = {
   DATA,
   getLessonSegments,
-  speakCurrent: () => speak(state.current.word)
+  playbackSegmentFor,
+  speakCurrent: () => speak(state.current?.word)
 };

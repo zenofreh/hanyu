@@ -3,65 +3,132 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>中国語 音声四択トレーナー</title>
-  <link rel="stylesheet" href="./styles.css">
+  <title>中国語 音声四択トレーナー | Susume Hanyu Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;800;900&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css?v=35">
 </head>
-<body>
+<body data-exam-theme="third">
+  <div class="bgGlow" aria-hidden="true"></div>
+
   <main class="app">
-    <section class="hero">
-      <div>
-        <p class="eyebrow">Susume vocabulary trainer</p>
+    <header class="hero">
+      <div class="heroBrand">
+        <div class="brandRow">
+          <span class="seal" lang="zh-CN" aria-hidden="true">漢</span>
+          <p class="eyebrow">Susume Vocabulary &amp; Listening Studio</p>
+          <button id="themeToggle" class="iconPill" type="button" aria-label="ダークモード切替" title="テーマ切替">
+            <span id="themeIcon">🌙</span>
+          </button>
+        </div>
         <h1>音で覚える中国語四択</h1>
-        <p class="lead">中国語音声を聞いて、ピンインか漢字を選ぶ練習サイト。耳から覚えるために、問題中は意味を隠します。</p>
+        <p class="lead">教材のネイティブ原音声を自動で単語ごとに切り出し。耳から瞬時にピンイン・漢字・意味が浮かぶまで反復できる小テスト対策トレーナー。</p>
       </div>
+
       <div class="scorePanel" aria-label="学習スコア">
-        <div><span id="totalCount">0</span><small>問</small></div>
-        <div><span id="accuracy">0%</span><small>正答率</small></div>
-        <div><span id="streak">0</span><small>連続正解</small></div>
+        <div class="statCard">
+          <span id="totalCount">0</span>
+          <small>回答数</small>
+        </div>
+        <div class="statCard">
+          <span id="accuracy">0%</span>
+          <small>正答率</small>
+        </div>
+        <div class="statCard streakCard" id="streakCard">
+          <span id="streak">0</span>
+          <small>連続正解</small>
+        </div>
       </div>
-    </section>
+    </header>
 
     <nav class="examSwitch" aria-label="テスト範囲">
       <div class="examTabs" role="tablist" aria-label="テストを選択">
-        <button class="examTab" type="button" data-exam="first" role="tab">第1回テスト</button>
-        <button class="examTab" type="button" data-exam="second" role="tab">第2回テスト</button>
+        <button class="examTab" type="button" data-exam="first" role="tab">
+          <span>第1回テスト</span>
+          <em id="countFirst">155</em>
+        </button>
+        <button class="examTab" type="button" data-exam="second" role="tab">
+          <span>第2回テスト</span>
+          <em id="countSecond">156</em>
+        </button>
+        <button class="examTab active" type="button" data-exam="third" role="tab">
+          <span>第3回テスト <b class="newTag">NEW</b></span>
+          <em id="countThird">198</em>
+        </button>
+        <button class="examTab" type="button" data-exam="all" role="tab">
+          <span>全範囲まとめ</span>
+          <em id="countAll">509</em>
+        </button>
       </div>
-      <p id="examDescription">第1回の単語だけを出題します</p>
+      <p id="examDescription" class="examDesc">第3回（第12課〜第16課：110〜144）の単語を出題します</p>
     </nav>
 
-    <section class="controls" aria-label="設定">
+    <section class="controls" aria-label="出題設定">
       <div class="controlGroup">
-        <label for="mode">出題</label>
+        <label for="mode">出題形式</label>
         <select id="mode">
-          <option value="mixed">ミックス</option>
+          <option value="mixed">ミックス（ピンイン・漢字）</option>
           <option value="pinyin">ピンインを選ぶ</option>
           <option value="hanzi">漢字を選ぶ</option>
+          <option value="meaning">意味を選ぶ（日本語）</option>
         </select>
       </div>
+
       <div class="controlGroup">
-        <label for="lesson">課</label>
+        <label for="lesson">範囲・トラック</label>
         <select id="lesson">
           <option value="all">すべて</option>
         </select>
       </div>
-      <button id="mistakesOnly" class="ghost" type="button">苦手だけ</button>
-      <button id="resetStats" class="ghost" type="button">記録リセット</button>
+
+      <div class="toggleRow">
+        <button id="autoPlayToggle" class="chip active" type="button" aria-pressed="true" title="次の問題に進んだとき自動で音声を再生します">
+          <span>⚡ 自動再生</span>
+        </button>
+        <button id="hardModeToggle" class="chip" type="button" aria-pressed="false" title="選択肢の補助ラベル（漢字／ピンイン）を隠して本番形式で練習します">
+          <span>🎯 本番モード</span>
+        </button>
+        <button id="mistakesOnly" class="chip" type="button" aria-pressed="false">
+          <span>⭐ 要復習だけ</span>
+          <b id="mistakeBadge" class="chipCount">0</b>
+        </button>
+      </div>
     </section>
 
     <section class="quizShell">
-      <article class="quizCard">
-        <div class="topline">
-          <span id="lessonBadge" class="badge">047</span>
-          <span id="modeBadge" class="badge soft">ピンイン</span>
+      <article class="quizCard" id="quizCard">
+        <div class="deckProgress" aria-label="ラウンド進捗">
+          <div class="deckInfo">
+            <span id="deckLabel">ラウンド 1周目</span>
+            <span id="deckCounter">1 / 198 語</span>
+          </div>
+          <div class="progressBar">
+            <div id="progressFill" class="progressFill" style="width: 0%"></div>
+          </div>
         </div>
 
-        <div class="prompt">
+        <div class="topline">
+          <div class="badges">
+            <span id="lessonBadge" class="badge">第12課 · 110</span>
+            <span id="modeBadge" class="badge soft">ピンインを選ぶ</span>
+          </div>
+          <div class="speedSwitch" role="group" aria-label="再生速度">
+            <button id="speedNormal" class="speedBtn active" type="button" data-rate="1">1.0x</button>
+            <button id="speedSlow" class="speedBtn" type="button" data-rate="0.78">0.8x ゆっくり</button>
+          </div>
+        </div>
+
+        <div class="prompt" id="promptBox">
           <button id="playWord" class="playButton" type="button" aria-label="単語音声を再生">
-            <span>▶</span>
+            <span class="playIcon" aria-hidden="true">▶</span>
+            <span class="waveBars" aria-hidden="true">
+              <i></i><i></i><i></i><i></i>
+            </span>
           </button>
-          <div>
-            <p id="questionTitle">中国語音声を聞いて選ぼう</p>
-            <p id="questionHint">再生ボタンを押して、聞こえた単語の答えを選んでください。</p>
+          <div class="promptText">
+            <p id="questionTitle">中国語音声を聞いて正解を選ぼう</p>
+            <p id="questionHint">耳だけで聞き取って選択。回答後は他の選択肢もタップして音を聞き比べられます。</p>
           </div>
         </div>
 
@@ -70,38 +137,95 @@
         <div id="feedback" class="feedback" aria-live="polite"></div>
 
         <div class="actions">
-          <button id="next" type="button">次の問題</button>
-          <button id="replay" class="secondary" type="button">もう一度聞く</button>
+          <button id="next" class="primaryAction" type="button">
+            <span>次の問題へ</span>
+            <kbd>Enter</kbd>
+          </button>
+          <button id="replay" class="secondary" type="button">
+            <span>🔊 もう一度聞く</span>
+            <kbd>R</kbd>
+          </button>
+          <button id="shuffleDeck" class="ghost smBtn" type="button" title="出題順をシャッフルし直す">
+            🔀 順番リセット
+          </button>
         </div>
       </article>
 
       <aside class="sidePanel">
-        <h2>原音声</h2>
-        <p id="trackLabel">この問題の課の音声</p>
-        <audio id="lessonAudio" controls preload="metadata"></audio>
-        <label class="voiceLabel" for="voiceSelect">予備の中国語読み上げ音声</label>
-        <select id="voiceSelect"></select>
-        <div class="audioTune" aria-label="音声位置補正">
-          <button id="audioPrev" class="ghost" type="button">音声を1つ前へ</button>
-          <button id="audioNext" class="ghost" type="button">音声を1つ次へ</button>
+        <div class="panelSection">
+          <div class="sideHeader">
+            <h2>教材トラック原音声</h2>
+            <span id="clipTimeBadge" class="timeBadge">--:--</span>
+          </div>
+          <p id="trackLabel" class="trackSub">第12課（110.mp3）の原音声</p>
+          <audio id="lessonAudio" controls preload="metadata"></audio>
         </div>
+
         <div class="miniStats">
-          <div><strong id="wordCount">0</strong><span>単語</span></div>
-          <div><strong id="mistakeCount">0</strong><span>苦手</span></div>
+          <div>
+            <strong id="wordCount">0</strong>
+            <span>対象単語</span>
+          </div>
+          <div>
+            <strong id="mistakeCount">0</strong>
+            <span>要復習 ★</span>
+          </div>
         </div>
-        <p class="note">問題の再生ボタンは教材 mp3 から切り出した中国語音声を鳴らします。下のプレイヤーでは課全体の原音声も確認できます。</p>
+
+        <details class="advancedDetails">
+          <summary>音声位置の微調整・予備設定</summary>
+          <div class="detailsBody">
+            <p class="tinyNote">万が一切り出し位置がずれている場合、1語ずつ前後へ補正できます（自動保存）。</p>
+            <div class="audioTune" aria-label="音声位置補正">
+              <button id="audioPrev" class="ghost" type="button">◀ 1つ前へ</button>
+              <button id="audioNext" class="ghost" type="button">1つ次へ ▶</button>
+            </div>
+            <button id="audioResetOne" class="ghost fullBtn" type="button">この単語の位置補正をリセット</button>
+
+            <label class="voiceLabel" for="voiceSelect">予備のブラウザ合成音声（TTS）</label>
+            <select id="voiceSelect"></select>
+
+            <hr class="divider">
+            <button id="resetStats" class="dangerGhost fullBtn" type="button">学習履歴・スコアを初期化</button>
+          </div>
+        </details>
+
+        <div class="shortcutCard" aria-label="キーボードショートカット">
+          <h3>ショートカット</h3>
+          <ul>
+            <li><span>選択肢 1〜4</span><span class="kbdGroup"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd></span></li>
+            <li><span>音声を再生</span><span class="kbdGroup"><kbd>R</kbd><span>/</span><kbd>Space</kbd></span></li>
+            <li><span>次の問題へ</span><span class="kbdGroup"><kbd>Enter</kbd><span>/</span><kbd>→</kbd></span></li>
+            <li><span>要復習スター</span><span class="kbdGroup"><kbd>S</kbd></span></li>
+          </ul>
+        </div>
       </aside>
     </section>
 
-    <section class="wordBank">
+    <section class="wordBank" aria-label="単語帳">
       <div class="sectionHeader">
-        <h2>単語一覧</h2>
-        <input id="search" type="search" placeholder="漢字・ピンイン・意味で検索">
+        <div class="bankTitleGroup">
+          <h2>単語帳・赤シート暗記</h2>
+          <span id="bankCountLabel" class="bankCount">198 語</span>
+        </div>
+
+        <div class="bankControls">
+          <div class="maskToggles" role="group" aria-label="赤シート暗記マスク">
+            <button id="maskPinyin" class="chip smChip" type="button">ピンインを隠す</button>
+            <button id="maskMeaning" class="chip smChip" type="button">意味を隠す</button>
+            <button id="bankStarFilter" class="chip smChip" type="button">★ 要復習のみ</button>
+          </div>
+          <div class="searchWrap">
+            <input id="search" type="search" placeholder="漢字・ピンイン・意味・番号で検索...">
+          </div>
+        </div>
       </div>
+
+      <p class="bankHint">カードをクリックするとネイティブ原音声を再生します。マスク中はホバー／タップで答えを確認できます。</p>
       <div id="wordList" class="wordList"></div>
     </section>
   </main>
 
-  <script src="./app.js?v=29"></script>
+  <script src="./app.js?v=35"></script>
 </body>
 </html>
